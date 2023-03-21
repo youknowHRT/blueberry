@@ -12,7 +12,10 @@ declare module '@vue/runtime-core' {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconLocalCloud: typeof import('~icons/local/cloud')['default']
     IconSvgCloud: typeof import('~icons/svg/cloud')['default']
+    IconSvgMangosteen: typeof import('~icons/svg/mangosteen')['default']
+    IconSvgPig: typeof import('~icons/svg/pig')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    VanButton: typeof import('vant/es')['Button']
   }
 }

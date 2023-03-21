@@ -5,6 +5,7 @@ import Icons from 'unplugin-icons/vite'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import Components from 'unplugin-vue-components/vite'
 import IconsResolver from 'unplugin-icons/resolver'
+import { VantResolver } from 'unplugin-vue-components/resolvers';
 
 export default defineConfig({
   resolve: {
@@ -30,6 +31,7 @@ export default defineConfig({
           prefix: 'icon',
           customCollections: ['svg'],
         }),
+        VantResolver(),
       ],
     }),
   ]
