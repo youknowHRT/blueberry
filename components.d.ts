@@ -11,6 +11,8 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconLocalCloud: typeof import('~icons/local/cloud')['default']
+    IconSvgChart: typeof import('~icons/svg/chart')['default']
+    IconSvgClock: typeof import('~icons/svg/clock')['default']
     IconSvgCloud: typeof import('~icons/svg/cloud')['default']
     IconSvgMangosteen: typeof import('~icons/svg/mangosteen')['default']
     IconSvgPig: typeof import('~icons/svg/pig')['default']

@@ -10,8 +10,8 @@ import { VantResolver } from 'unplugin-vue-components/resolvers';
 export default defineConfig({
   resolve: {
     alias: {
-      '@': '/src',
-    },
+      '@': '/src'
+    }
   },
   plugins: [
     vue(),

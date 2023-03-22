@@ -5,22 +5,44 @@
     <h1>蓝莓记账</h1>
   </header>
   <main>
-    <section>
-      <IconSvgPig/>
-      <h2>会挣钱<br>还要会省钱</h2>
-    </section>
+    <Transition name="slide-fade">
+      <section v-if='refMode===1'>
+        <IconSvgPig/>
+        <h2>会挣钱<br>还要会省钱</h2>
+      </section>
+      <section v-else-if="refMode===2">
+        <IconSvgClock/>
+        <h2>每日提醒<br/>不遗漏每一笔账单</h2>
+      </section>
+      <section v-else-if="refMode===3">
+        <IconSvgChart/>
+        <h2>数据可视化<br/>收支一目了然</h2>
+      </section>
+      <section v-else>
+        <IconSvgCloud/>
+        <h2>云备份<br/>再也不怕数据丢失</h2>
+      </section>
+    </Transition>
   </main>
-  <footer>
-    <span class="fake">fake</span>
-    <span>下一页</span>
-    <span>跳过</span>
+  <footer :class="{finish:refMode===4}">
+    <span v-show="refMode!==4" class="fake">fake</span>
+    <span @click="handNext">{{refMode===4 ? '完成':'下一页'}}</span>
+    <span v-show="refMode!==4">跳过</span>
   </footer>
  </div>
 </template>
+
 <script lang='ts' setup name="welcome">
  import { ref, reactive} from 'vue'
-//  import {Button} from 'antd-mobile'
- 
+import { throttle } from '../../utils/throttle';
+  const refMode = ref<number>(1)
+  const handNext = throttle(() => {
+    if(refMode.value===4){
+      // 路由跳转
+    }else{
+      refMode.value++
+    }
+  },500)
 </script>
 <style scoped lang='scss'>
  .welcomePage{
@@ -46,14 +68,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
     margin: 16px 16px 8px;
-    border-radius: 8px;
+    position: relative;
     section{
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      background-color: #fff;
+      border-radius: 8px;
       h2{
         text-align: center;
         margin-top: 40px;
@@ -75,6 +100,23 @@
     .fake{
       visibility: hidden;
     }
+    &.finish{
+      justify-content: center;
+    }
   }
  }
+ .slide-fade-enter-active,.slide-fade-leave-active {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transition: all .5s ease-out;
+}
+.slide-fade-enter-from{
+  transform: translateX(100vw);
+}
+.slide-fade-leave-to {
+  transform: translateX(-100vw);
+}
 </style>
