@@ -4,7 +4,7 @@
     <IconSvgMangosteen/>
     <h1>蓝莓记账</h1>
   </header>
-  <main>
+  <main ref="main">
     <Transition name="slide-fade">
       <section v-if='refMode===1'>
         <IconSvgPig/>
@@ -33,8 +33,9 @@
 </template>
 
 <script lang='ts' setup name="welcome">
- import { ref, reactive} from 'vue'
-import { throttle } from '../../utils/throttle';
+  import { ref, watchEffect} from 'vue'
+  import { useSwipe } from '../../hooks/useSwipe';
+  import { throttle } from '../../utils/throttle';
   const refMode = ref<number>(1)
   const handNext = throttle(() => {
     if(refMode.value===4){
@@ -42,7 +43,14 @@ import { throttle } from '../../utils/throttle';
     }else{
       refMode.value++
     }
-  },500)
+  }, 500)
+  const main=ref<HTMLElement | undefined>(undefined)
+  const {swiping,direction} = useSwipe(main)
+  watchEffect(() => {
+    if(swiping.value && direction.value==='left'){
+      handNext([])
+    }
+  })
 </script>
 <style scoped lang='scss'>
  .welcomePage{
