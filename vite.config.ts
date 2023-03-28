@@ -22,6 +22,7 @@ export default defineConfig({
       autoInstall: true,
       customCollections:{
         svg: FileSystemIconLoader('src/assets/icons/svg', svg => svg.replace(/^<svg /, '<svg fill="currentColor" ')),
+        layout: FileSystemIconLoader('src/assets/icons/layout', svg => svg.replace(/^<svg /, '<svg fill="currentColor" width="1.2em" height="1.2em" ')),
       }
     }),
     Components({
@@ -29,7 +30,7 @@ export default defineConfig({
         IconsResolver({
           // alias: { //   park: 'icon-park', // },
           prefix: 'icon',
-          customCollections: ['svg'],
+          customCollections: ['svg','layout'],
         }),
         VantResolver(),
       ],

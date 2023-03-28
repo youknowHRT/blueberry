@@ -10,7 +10,10 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    IconLocalCloud: typeof import('~icons/local/cloud')['default']
+    IconLayoutBill: typeof import('~icons/layout/bill')['default']
+    IconLayoutChart: typeof import('~icons/layout/chart')['default']
+    IconLayoutEdit: typeof import('~icons/layout/edit')['default']
+    IconLayoutMenu: typeof import('~icons/layout/menu')['default']
     IconSvgChart: typeof import('~icons/svg/chart')['default']
     IconSvgClock: typeof import('~icons/svg/clock')['default']
     IconSvgCloud: typeof import('~icons/svg/cloud')['default']
@@ -19,5 +22,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VanButton: typeof import('vant/es')['Button']
+    VanTabbar: typeof import('vant/es')['Tabbar']
+    VanTabbarItem: typeof import('vant/es')['TabbarItem']
   }
 }
