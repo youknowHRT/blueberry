@@ -2,7 +2,7 @@
  <div class='mainLayout'>
   <header>
     <div class="titleRow">
-      <IconLayoutMenu/><h3>蓝莓记账</h3>
+      <IconLayoutMenu @click="handleMenu"/><h3>蓝莓记账</h3>
     </div>
   </header>
   <main>
@@ -30,12 +30,24 @@
       </van-tabbar-item>
     </van-tabbar>
   </footer>
+  <van-overlay :show="showSidebar" @click="showSidebar = false">
+    <div class="sidebar" @click.stop>
+      wo-shi-sidebar
+    </div>
+  </van-overlay>
  </div>
 </template>
+
 <script lang='ts' setup name='MainLayout'>
- import { ref, reactive} from 'vue'
- const active = ref<string>('bill')
+  import { ref, reactive} from 'vue'
+  const active = ref<string>('bill')
+  const showSidebar = ref<boolean>(false)
+  const handleMenu=()=>{
+    console.log('menu')
+    showSidebar.value = true
+  }
 </script>
+
 <style scoped lang='scss'>
   .mainLayout{
     display: flex;
@@ -59,6 +71,11 @@
     }
     footer{
       height: 50px;
+    }
+    .sidebar{
+      width: 80vw;
+      height: 100vh;
+      background: #fff
     }
   }
 </style>
