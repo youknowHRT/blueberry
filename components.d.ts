@@ -22,8 +22,11 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VanButton: typeof import('vant/es')['Button']
+    VanEmpty: typeof import('vant/es')['Empty']
     VanOverlay: typeof import('vant/es')['Overlay']
+    VanTab: typeof import('vant/es')['Tab']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
+    VanTabs: typeof import('vant/es')['Tabs']
   }
 }
