@@ -6,23 +6,23 @@
     </div>
   </header>
   <main>
-    <router-view></router-view>
+    <slot></slot>
   </main>
   <footer>
     <van-tabbar v-model="active" route>
-      <van-tabbar-item name="bill" to="/billPage">
+      <van-tabbar-item name="bill" to="/home/billPage">
         <span>账单</span>
         <template #icon="props">
           <IconLayoutBill/>
         </template>
       </van-tabbar-item>
-      <van-tabbar-item name="edit" to="/editPage">
+      <van-tabbar-item name="edit" to="/home/editPage">
         <span>记账</span>
         <template #icon="props">
           <IconLayoutEdit/>
         </template>
       </van-tabbar-item>
-      <van-tabbar-item name="chart" to="/chartPage">
+      <van-tabbar-item name="chart" to="/home/chartPage">
         <span>图表</span>
         <template #icon="props">
           <IconLayoutChart/>

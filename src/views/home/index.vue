@@ -1,17 +1,12 @@
 <template>
   <MainLayout>
-    <div>
-      woshi detailPage
-    </div>
+    <router-view name="main"></router-view>
   </MainLayout>
 </template>
-<script lang='ts' setup name='DetailPage'>
+<script lang='ts' setup name='Home'>
 import MainLayout from '@/layouts/MainLayout.vue'
  import { ref, reactive} from 'vue'
  
 </script>
 <style scoped lang='scss'>
-  .detailPage{
-    border: 2px solid red;
-  }
 </style>

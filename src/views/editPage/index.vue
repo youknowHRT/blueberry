@@ -1,6 +1,6 @@
 <template>
   <div class=''>
-  chartPage
+  editPage
   </div>
  </template>
  <script lang='ts' setup name='ChartPage'>
