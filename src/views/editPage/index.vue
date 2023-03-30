@@ -1,11 +1,13 @@
 <template>
   <div class=''>
-  editPage
+    editPage
+    <InputPad/>
   </div>
  </template>
- <script lang='ts' setup name='ChartPage'>
+ <script lang='ts' setup name='EditPage'>
   import { ref, reactive} from 'vue'
-  
+  import InputPad from './components/InputPad.vue'
+   
  </script>
  <style scoped lang='scss'>
   
