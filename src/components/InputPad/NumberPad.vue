@@ -100,18 +100,21 @@
 </script>
 <style scoped lang='scss'>
 .numberPad{
+  padding-top: 2px;
+  background-color: var(--numPad-bg);
   .msgRow{
     display: flex;
     align-items: center;
     padding: 8px 16px;
-    border: 1px solid red;
+    background-color: var(--numPad-msgRow-bg);
+    // border: 1px solid red;
     .dateBox{
       display: inline-flex;
       align-items: center;
       svg{
         height: 28px;
         width: 28px;
-        color: var(--numPad-important-button-bg);
+        color: var(--amount-text-color);
         margin-right: 4px;
       }
     }
@@ -131,7 +134,8 @@
                         'ac n0 nd s';
     grid-auto-rows: 48px;
     grid-auto-columns: 1fr;
-    background-color: var(--numPad-bg);
+    // background-color: var(--numPad-bg);
+    padding: 2px;
     gap: 4px;
     >button{
       border: none;

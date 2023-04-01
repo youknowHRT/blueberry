@@ -1,6 +1,6 @@
 <template>
  <div class='billPage'>
-  <van-tabs v-model:active="active">
+  <van-tabs v-model:active="active" class="fullHeight">
     <van-tab title="本月" name="curMonth">
       <BillList :list="list"/>
     </van-tab>
@@ -27,14 +27,5 @@
 <style scoped lang='scss'>
  .billPage{
   height: 100%;
-  :deep(.van-tabs){
-    height: 100%;
-    .van-tabs__content{
-      height: calc(100% - 44px);
-      .van-tab__panel{
-        height: 100%;
-      }
-    }
-  }
  }
 </style>
