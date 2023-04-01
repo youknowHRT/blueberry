@@ -16,7 +16,7 @@
           </van-popup>
         </span>
       </span>
-      <span class="amountBox">金额</span>
+      <span class="amountBox">{{refAmount}}</span>
     </div>
     <div class="numPad">
       <button class="btn" v-for="btn in buttons" :key="btn.text" @click="btn.onClick">
@@ -28,6 +28,8 @@
 <script lang='ts' setup name='NumberPad'>
    import { ref, reactive, onMounted} from 'vue'
    import * as dayjs from 'dayjs'
+   import { showDialog } from 'vant'
+
    const padForm = reactive({
      amount: '',
      date: '',
@@ -46,9 +48,38 @@
       padForm.date = refDate.value.join('-')
     }
 
-    const refAmount = ref<string>('')
-   const handleBtnNum=(value:string)=>{
-     console.log(value)
+    const refAmount = ref<string>('0')
+    const handleBtnNum=(value:string)=>{
+      const aLen = refAmount.value.length
+      if(aLen >= 10)return
+      const dotIndex = refAmount.value.indexOf('.')
+      if(dotIndex >=0 && aLen - dotIndex > 2)return
+      if(value === '.' && dotIndex >= 0)return
+      if(value === '0' && refAmount.value === '0')return
+      if(value !== '0' && value !== '.' && refAmount.value === '0')refAmount.value = ''
+      refAmount.value += value
+    }
+   const handleBtnDel = ()=>{
+      const aLen = refAmount.value.length
+      if(aLen === 1){
+        refAmount.value = '0'
+      }else{
+        refAmount.value = refAmount.value.slice(0, aLen-1)
+      }
+   }
+   const handleSubmit = ()=>{
+     console.log('submit')
+     const amount = refAmount.value.split('').filter((item:string)=>item !== '.')
+     const isZero = amount.every((item:string)=>item === '0')
+     if(isZero){
+      showDialog({
+        title: '出错',
+        message: '金额不能为零',
+        width: '80%',
+        confirmButtonColor: '#ee0a24',
+      })
+       return
+     }
    }
    const buttons= [
       {text: '1', onClick:()=>{handleBtnNum('1')}},
@@ -62,9 +93,9 @@
       {text: '9', onClick:()=>{handleBtnNum('9')}},
       {text: '0', onClick:()=>{handleBtnNum('0')}},
       {text: '.', onClick:()=>{handleBtnNum('.')}},
-      {text: '删除', onClick:()=>{handleBtnNum('.')}},
-      {text: '提交', onClick:()=>{handleBtnNum('.')}},
-      {text: 'AC', onClick:()=>{refAmount.value=''}},
+      {text: '删除', onClick:()=>{handleBtnDel()}},
+      {text: '提交', onClick:()=>{handleSubmit()}},
+      {text: 'AC', onClick:()=>{refAmount.value='0'}},
    ]
 </script>
 <style scoped lang='scss'>
