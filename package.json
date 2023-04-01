@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "dayjs": "^1.11.7",
+    "echarts": "5.4.2",
     "sass": "1.59.3",
     "vant": "4.1.1",
     "vue": "3.2.37",

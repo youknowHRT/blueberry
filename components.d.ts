@@ -21,6 +21,7 @@ declare module '@vue/runtime-core' {
     IconSvgMangosteen: typeof import('~icons/svg/mangosteen')['default']
     IconSvgPig: typeof import('~icons/svg/pig')['default']
     InputPad: typeof import('./src/components/InputPad/InputPad.vue')['default']
+    LineChart: typeof import('./src/components/charts/LineChart.vue')['default']
     NumberPad: typeof import('./src/components/InputPad/NumberPad.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
