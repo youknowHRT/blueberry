@@ -1,7 +1,22 @@
 <template>
- <div class='inputPad'>
+ <div class='numberPad'>
     <div class='msgRow'>
-      icon - data - money
+      <span class="dateBox">
+        <IconSvgCalendar/>
+        <span>
+          <span @click="showCalendar = true">{{padForm.date}}</span>
+          <van-popup v-model:show="showCalendar" position="bottom" >
+            <van-date-picker
+              v-model="refDate"
+              title="选择日期"
+              @confirm="handleDateConfirm"
+              @cancel="showCalendar = false"
+              @change="handleDateChange"
+            />
+          </van-popup>
+        </span>
+      </span>
+      <span class="amountBox">金额</span>
     </div>
     <div class="numPad">
       <button class="btn" v-for="btn in buttons" :key="btn.text" @click="btn.onClick">
@@ -10,9 +25,28 @@
     </div>
  </div>
 </template>
-<script lang='ts' setup name='InputPad'>
-   import { ref, reactive} from 'vue'
-   const refAmount = ref<string>('')
+<script lang='ts' setup name='NumberPad'>
+   import { ref, reactive, onMounted} from 'vue'
+   import * as dayjs from 'dayjs'
+   const padForm = reactive({
+     amount: '',
+     date: '',
+   })
+   const showCalendar = ref<boolean>(false)
+   onMounted(()=>{
+     padForm.date = dayjs().format('YYYY-MM-DD')
+     refDate.value = padForm.date.split('-')
+   })
+   const refDate = ref<string[]>([]);
+   const handleDateChange=(value:string)=>{
+     padForm.date = value.selectedValues.join('-')
+   }
+    const handleDateConfirm=()=>{
+      showCalendar.value = false
+      padForm.date = refDate.value.join('-')
+    }
+
+    const refAmount = ref<string>('')
    const handleBtnNum=(value:string)=>{
      console.log(value)
    }
@@ -34,7 +68,30 @@
    ]
 </script>
 <style scoped lang='scss'>
-.inputPad{
+.numberPad{
+  .msgRow{
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border: 1px solid red;
+    .dateBox{
+      display: inline-flex;
+      align-items: center;
+      svg{
+        height: 28px;
+        width: 28px;
+        color: var(--numPad-important-button-bg);
+        margin-right: 4px;
+      }
+    }
+    .amountBox{
+      flex:1;
+      width: 100px;
+      color: var(--amount-text-color);
+      font-size: 20px;
+      text-align: right;
+    }
+  }
   .numPad{
     display: grid;
     grid-template-areas:'n1 n2 n3 d'
@@ -44,7 +101,7 @@
     grid-auto-rows: 48px;
     grid-auto-columns: 1fr;
     background-color: var(--numPad-bg);
-    gap: 2px;
+    gap: 4px;
     >button{
       border: none;
       background-color: var(--numPad-common-button-bg);

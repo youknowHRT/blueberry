@@ -1,12 +1,12 @@
 <template>
   <div class=''>
     editPage
-    <InputPad/>
+    <NumberPad/>
   </div>
  </template>
  <script lang='ts' setup name='EditPage'>
   import { ref, reactive} from 'vue'
-  import InputPad from './components/InputPad.vue'
+  import NumberPad from '@/components/InputPad/NumberPad.vue'
    
  </script>
  <style scoped lang='scss'>
