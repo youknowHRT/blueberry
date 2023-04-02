@@ -4,6 +4,7 @@
       <van-tab title="本月" name="curMonth">
         本月
         <LineChart/>
+        <PieChart/>
       </van-tab>
       <van-tab title="上月" name="lastMonth">
         上月

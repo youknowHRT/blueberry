@@ -1,27 +1,33 @@
 <template>
- <div class='main' ref="lineChart" style="height: 228px;width:100vw">
+ <div class='main' ref="lineChart" style="height: 128px">
  </div>
 </template>
-<script lang='ts' setup name=''>
+<script lang='ts' setup name='LineChart'>
   import * as echarts from 'echarts';
   import { ref, reactive, onMounted, nextTick} from 'vue'
   const lineChart = ref<HTMLElement>()
   const initChart=()=>{
     var myChart = echarts.init(lineChart.value);
     myChart.setOption({
-      title: {
-        text: 'ECharts 入门示例'
-      },
-      tooltip: {},
+      grid: [{ left: 16, top: 20, right: 16, bottom: 20 }],
       xAxis: {
-        data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        // boundaryGap: ['3%', '0%'],
+        // axisTick: {
+        //   alignWithLabel: true,
+        // },
       },
-      yAxis: {},
+      yAxis: {
+        type: 'value',
+        axisLabel: {
+          show: false,
+        },
+      },
       series: [
         {
-          name: '销量',
-          type: 'bar',
-          data: [5, 20, 36, 10, 10, 20]
+          data: [150, 230, 224, 218, 135, 147, 260],
+          type: 'line'
         }
       ]
     })

@@ -23,6 +23,7 @@ declare module '@vue/runtime-core' {
     InputPad: typeof import('./src/components/InputPad/InputPad.vue')['default']
     LineChart: typeof import('./src/components/charts/LineChart.vue')['default']
     NumberPad: typeof import('./src/components/InputPad/NumberPad.vue')['default']
+    PieChart: typeof import('./src/components/charts/PieChart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VanButton: typeof import('vant/es')['Button']
