@@ -7,23 +7,37 @@
         <h3>登录</h3>
       </div>
     </template>
-    <section>
-      <van-field
-        v-model="formData.username"
-        label="邮箱"
-        placeholder="请输入邮箱地址"
-        clearable
-        required
-      />
-      <van-field
-        v-model="formData.password"
-        label="密码"
-        placeholder="请输入密码"
-        clearable
-        required
-        type="password"
-      />
-      <van-button type="primary" block @click="handleLogin">登录</van-button>
+    <section class="logoSec">
+      <IconSvgMangosteen/>
+      <h3>蓝莓记账</h3>
+    </section>
+    <section class="loginForm">
+      <van-form @submit="onSubmit" @failed="onFailed">
+        <van-field
+          v-model="formData.username"
+          name="用户名"
+          label="用户名"
+          placeholder="用户名"
+          :rules="[{ required: true, message: '请填写用户名' }]"
+        />
+        <van-field
+          v-model="formData.password"
+          type="password"
+          name="验证码"
+          label="验证码"
+          placeholder="请填写验证码"
+          :rules="[{ required: true, message: '请填写验证码' }]"
+        >
+          <template #button>
+            <van-button size="small" color="#5c33be">发送验证码</van-button>
+          </template>
+        </van-field>
+        <div class="submitBtnRow">
+          <van-button block native-type="submit" color="#5c33be">
+            提交
+          </van-button>
+        </div>
+      </van-form>
     </section>
   </MainLayout>
  </div>
@@ -35,8 +49,11 @@
     username: '',
     password: ''
   })
-  const handleLogin=()=>{
+  const onSubmit=()=>{
     console.log('login')
+  }
+  const onFailed=()=>{
+    console.log('failed')
   }
 </script>
 <style scoped lang='scss'>
@@ -47,6 +64,29 @@
     column-gap: 12px;
     align-items: center;
     font-size: 24px;
+  }
+  .logoSec{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top:42px;
+    gap: 12px;
+    svg{
+      height: 68px;
+      width: 64px;
+    }
+    h3{
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--app-name-color)
+    }
+  }
+  .loginForm{
+    padding-top:32px;
+    .submitBtnRow{
+      margin:48px 16px 0 16px;
+    }
   }
  }
 </style>
