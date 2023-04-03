@@ -3,15 +3,16 @@
   --welcome-bg-start: #5d33be;
   --numPad-bg: #f7f7f7;
   --common-block-bg: #fff;
-  --numPad-common-button-bg: #fff;
   --numPad-important-button-bg: #5c33be;
   --numPad-important-button-color: #f5f5f5;
   --amount-text-color: #53a867;
   --numPad-msgRow-bg: var(--common-block-bg);
   --app-name-color: #7878FF;
-  // --main-button-bg: #5c33be;
+  --main-button-bg: #5c33be;
 }
 
 :root:root{
-  --van-tabbar-item-font-size: 14px
+  --van-tabbar-item-font-size: 14px;
+  --van-button-primary-background: var(--main-button-bg);
+  --van-button-primary-border-color: var(--main-button-bg);
 }

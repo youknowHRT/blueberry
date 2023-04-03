@@ -19,9 +19,11 @@
       <span class="amountBox">{{refAmount}}</span>
     </div>
     <div class="numPad">
-      <button class="btn" v-for="btn in buttons" :key="btn.text" @click="btn.onClick">
-        {{btn.text}}
-      </button>
+      <span class="btn" v-for="btn in buttons" :key="btn.text" @click="btn.onClick">
+        <van-button block :type="btn.type">
+          {{btn.text}}
+        </van-button>
+      </span>
     </div>
  </div>
 </template>
@@ -82,20 +84,20 @@
      }
    }
    const buttons= [
-      {text: '1', onClick:()=>{handleBtnNum('1')}},
-      {text: '2', onClick:()=>{handleBtnNum('2')}},
-      {text: '3', onClick:()=>{handleBtnNum('3')}},
-      {text: '4', onClick:()=>{handleBtnNum('4')}},
-      {text: '5', onClick:()=>{handleBtnNum('5')}},
-      {text: '6', onClick:()=>{handleBtnNum('6')}},
-      {text: '7', onClick:()=>{handleBtnNum('7')}},
-      {text: '8', onClick:()=>{handleBtnNum('8')}},
-      {text: '9', onClick:()=>{handleBtnNum('9')}},
-      {text: '0', onClick:()=>{handleBtnNum('0')}},
-      {text: '.', onClick:()=>{handleBtnNum('.')}},
-      {text: '删除', onClick:()=>{handleBtnDel()}},
-      {text: '提交', onClick:()=>{handleSubmit()}},
-      {text: 'AC', onClick:()=>{refAmount.value='0'}},
+      {text: '1', onClick:()=>{handleBtnNum('1')}, type: 'default'},
+      {text: '2', onClick:()=>{handleBtnNum('2')}, type: 'default'},
+      {text: '3', onClick:()=>{handleBtnNum('3')}, type: 'default'},
+      {text: '4', onClick:()=>{handleBtnNum('4')}, type: 'default'},
+      {text: '5', onClick:()=>{handleBtnNum('5')}, type: 'default'},
+      {text: '6', onClick:()=>{handleBtnNum('6')}, type: 'default'},
+      {text: '7', onClick:()=>{handleBtnNum('7')}, type: 'default'},
+      {text: '8', onClick:()=>{handleBtnNum('8')}, type: 'default'},
+      {text: '9', onClick:()=>{handleBtnNum('9')}, type: 'default'},
+      {text: '0', onClick:()=>{handleBtnNum('0')}, type: 'default'},
+      {text: '.', onClick:()=>{handleBtnNum('.')}, type: 'default'},
+      {text: '删除', onClick:()=>{handleBtnDel()}, type: 'default'},
+      {text: '提交', onClick:()=>{handleSubmit()}, type: 'primary'},
+      {text: 'AC', onClick:()=>{refAmount.value='0'}, type: 'default'},
    ]
 </script>
 <style scoped lang='scss'>
@@ -134,12 +136,10 @@
                         'ac n0 nd s';
     grid-auto-rows: 48px;
     grid-auto-columns: 1fr;
-    // background-color: var(--numPad-bg);
     padding: 2px;
     gap: 4px;
-    >button{
+    >.btn{
       border: none;
-      background-color: var(--numPad-common-button-bg);
       border-radius: 4px;
       &:nth-child(1){
         grid-area: n1;
@@ -184,6 +184,10 @@
       }
       &:nth-child(14){
         grid-area: ac;
+      }
+      .van-button--block{
+        height: 100%;
+        border: none
       }
     }
   }
