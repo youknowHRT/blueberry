@@ -1,49 +1,41 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
-const routes=[
+const routes = [
   {
-    path:'/',
-    component:()=>import('@/views/welcome/index.vue')
+    path: '/',
+    component: () => import('@/views/welcome/index.vue')
   },
   {
-    path:'/home',
-    component:()=>import('@/views/home/index.vue'),
-    children:[
+    path: '/home',
+    component: () => import('@/views/home/index.vue'),
+    children: [
       { path: '', redirect: '/home/billPage' },
       {
-        path:'billPage',
-        name:'billPage',
-        components:{main:()=>import('@/views/billPage/index.vue')}
+        path: 'billPage',
+        name: 'billPage',
+        components: { main: () => import('@/views/billPage/index.vue') }
       },
       {
-        path:'editPage',
-        name:'editPage',
-        components:{main:()=>import('@/views/editPage/index.vue')}
+        path: 'editPage',
+        name: 'editPage',
+        components: { main: () => import('@/views/editPage/index.vue') }
       },
       {
-        path:'chartPage',
-        name:'chartPage',
-        components:{main:()=>import('@/views/chartPage/index.vue')}
+        path: 'chartPage',
+        name: 'chartPage',
+        components: { main: () => import('@/views/chartPage/index.vue') }
       },
       {
-        path:'userPage',
-        name:'userPage',
-        components:{main:()=>import('@/views/userPage/index.vue')}
-      },
+        path: 'userPage',
+        name: 'userPage',
+        components: { main: () => import('@/views/userPage/index.vue') }
+      }
     ]
   },
   {
-    path:'/login',
-    component:()=>import('@/views/login/index.vue')
-  },
-  // {
-  //   path:'/chartPage',
-  //   component:()=>import('@/views/chartPage/index.vue')
-  // },
-  // {
-  //   path:'/editPage',
-  //   component:()=>import('@/views/editPage/index.vue')
-  // },
+    path: '/login',
+    component: () => import('@/views/login/index.vue')
+  }
 ]
 
 export const router = createRouter({

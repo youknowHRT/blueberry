@@ -1,12 +1,7 @@
 <template>
- <div class='userPage'>
-  userpage
- </div>
+  <div class="userPage">userpage</div>
 </template>
-<script lang='ts' setup name='UserPage'>
-   import { ref, reactive} from 'vue'
-   
+<script lang="ts" setup name="UserPage">
+import { ref, reactive } from 'vue'
 </script>
-<style scoped lang='scss'>
- 
-</style>
+<style scoped lang="scss"></style>

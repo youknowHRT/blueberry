@@ -4,14 +4,13 @@
   </div>
 </template>
 
-<script setup lang="ts" name="app">
-</script>
+<script setup lang="ts" name="app"></script>
 
 <style lang="scss">
 @import './App.scss';
-#app{
+#app {
   height: 100vh;
-    .sonOfApp{
+  .sonOfApp {
     height: 100%;
   }
 }

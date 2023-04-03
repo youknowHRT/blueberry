@@ -29,7 +29,7 @@
 </template>
 <script lang='ts' setup name='NumberPad'>
    import { ref, reactive, onMounted} from 'vue'
-   import * as dayjs from 'dayjs'
+   import dayjs from 'dayjs'
    import { showDialog } from 'vant'
 
    const padForm = reactive({
@@ -42,7 +42,8 @@
      refDate.value = padForm.date.split('-')
    })
    const refDate = ref<string[]>([]);
-   const handleDateChange=(value:string)=>{
+   const handleDateChange=(value:Record<string,any>)=>{
+    console.log(value,'🍎')
      padForm.date = value.selectedValues.join('-')
    }
     const handleDateConfirm=()=>{
@@ -69,36 +70,36 @@
         refAmount.value = refAmount.value.slice(0, aLen-1)
       }
    }
-   const handleSubmit = ()=>{
-     console.log('submit')
-     const amount = refAmount.value.split('').filter((item:string)=>item !== '.')
-     const isZero = amount.every((item:string)=>item === '0')
-     if(isZero){
-      showDialog({
-        title: '出错',
-        message: '金额不能为零',
-        width: '80%',
-        confirmButtonColor: '#ee0a24',
-      })
-       return
-     }
-   }
-   const buttons= [
-      {text: '1', onClick:()=>{handleBtnNum('1')}, type: 'default'},
-      {text: '2', onClick:()=>{handleBtnNum('2')}, type: 'default'},
-      {text: '3', onClick:()=>{handleBtnNum('3')}, type: 'default'},
-      {text: '4', onClick:()=>{handleBtnNum('4')}, type: 'default'},
-      {text: '5', onClick:()=>{handleBtnNum('5')}, type: 'default'},
-      {text: '6', onClick:()=>{handleBtnNum('6')}, type: 'default'},
-      {text: '7', onClick:()=>{handleBtnNum('7')}, type: 'default'},
-      {text: '8', onClick:()=>{handleBtnNum('8')}, type: 'default'},
-      {text: '9', onClick:()=>{handleBtnNum('9')}, type: 'default'},
-      {text: '0', onClick:()=>{handleBtnNum('0')}, type: 'default'},
-      {text: '.', onClick:()=>{handleBtnNum('.')}, type: 'default'},
-      {text: '删除', onClick:()=>{handleBtnDel()}, type: 'default'},
-      {text: '提交', onClick:()=>{handleSubmit()}, type: 'primary'},
-      {text: 'AC', onClick:()=>{refAmount.value='0'}, type: 'default'},
-   ]
+  const handleSubmit = ()=>{
+    console.log('submit')
+    const amount = refAmount.value.split('').filter((item:string)=>item !== '.')
+    const isZero = amount.every((item:string)=>item === '0')
+    if(isZero){
+    showDialog({
+      title: '出错',
+      message: '金额不能为零',
+      width: '80%',
+      confirmButtonColor: '#ee0a24',
+    })
+      return
+    }
+  }
+  const buttons= [
+    {text: '1', onClick:()=>{handleBtnNum('1')}, type: 'default'},
+    {text: '2', onClick:()=>{handleBtnNum('2')}, type: 'default'},
+    {text: '3', onClick:()=>{handleBtnNum('3')}, type: 'default'},
+    {text: '4', onClick:()=>{handleBtnNum('4')}, type: 'default'},
+    {text: '5', onClick:()=>{handleBtnNum('5')}, type: 'default'},
+    {text: '6', onClick:()=>{handleBtnNum('6')}, type: 'default'},
+    {text: '7', onClick:()=>{handleBtnNum('7')}, type: 'default'},
+    {text: '8', onClick:()=>{handleBtnNum('8')}, type: 'default'},
+    {text: '9', onClick:()=>{handleBtnNum('9')}, type: 'default'},
+    {text: '0', onClick:()=>{handleBtnNum('0')}, type: 'default'},
+    {text: '.', onClick:()=>{handleBtnNum('.')}, type: 'default'},
+    {text: '删除', onClick:()=>{handleBtnDel()}, type: 'default'},
+    {text: '提交', onClick:()=>{handleSubmit()}, type: 'primary'},
+    {text: 'AC', onClick:()=>{refAmount.value='0'}, type: 'default'},
+  ]
 </script>
 <style scoped lang='scss'>
 .numberPad{

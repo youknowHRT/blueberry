@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { router } from './route/index'
-import 'vant/lib/index.css';
+import 'vant/lib/index.css'
 
 const app = createApp(App)
 app.use(router)
