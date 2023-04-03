@@ -179,8 +179,6 @@
       }
       &:nth-child(13){
         grid-area: s;
-        background-color: var(--numPad-important-button-bg);
-        color: var(--numPad-important-button-color);
       }
       &:nth-child(14){
         grid-area: ac;
