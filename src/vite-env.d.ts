@@ -15,4 +15,5 @@ declare global {
     onClick: () => void
     type: ButtonType
   }
+  type JSONValue = string | number | boolean | null | Record<string, JSONValue> | JSONValue[]
 }
