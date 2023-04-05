@@ -43,6 +43,7 @@
 <script lang="ts" setup name="Login">
 import { ref, reactive } from 'vue'
 import MainLayout from '@/layouts/MainLayout.vue'
+import {http} from '@/shared/Http'
 const formData = reactive({
   username: '',
   password: ''

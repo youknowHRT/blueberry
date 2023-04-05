@@ -6,11 +6,12 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import Components from 'unplugin-vue-components/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import { VantResolver } from 'unplugin-vue-components/resolvers';
+import { join } from "path";
 
 export default defineConfig({
   resolve: {
     alias: {
-      '@': '/src'
+      '@': join(__dirname, "src"),
     }
   },
   plugins: [
