@@ -14,6 +14,13 @@ export default defineConfig({
       '@': join(__dirname, "src"),
     }
   },
+  server: {
+    proxy: {
+      '/api/v1': {
+        target: 'http://39.99.237.46:3000/',
+      }
+    }
+  },
   plugins: [
     vue(),
     VueSetupExtend(),//给component命名

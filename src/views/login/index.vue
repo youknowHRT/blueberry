@@ -14,11 +14,11 @@
       <section class="loginForm">
         <van-form @submit="onSubmit" @failed="onFailed">
           <van-field
-            v-model="formData.username"
-            name="用户名"
-            label="用户名"
-            placeholder="用户名"
-            :rules="[{ required: true, message: '请填写用户名' }]"
+            v-model="formData.email"
+            name="邮箱地址"
+            label="邮箱地址"
+            placeholder="邮箱地址"
+            :rules="[{ required: true, message: '请填写邮箱地址' }]"
           />
           <van-field
             v-model="formData.password"
@@ -29,7 +29,7 @@
             :rules="[{ required: true, message: '请填写验证码' }]"
           >
             <template #button>
-              <van-button size="small" color="#5c33be">发送验证码</van-button>
+              <van-button size="small" color="#5c33be" @click="getValidateCode">发送验证码</van-button>
             </template>
           </van-field>
           <div class="submitBtnRow">
@@ -43,9 +43,9 @@
 <script lang="ts" setup name="Login">
 import { ref, reactive } from 'vue'
 import MainLayout from '@/layouts/MainLayout.vue'
-import {http} from '@/shared/Http'
+import { http } from '@/shared/Http'
 const formData = reactive({
-  username: '',
+  email: '',
   password: ''
 })
 const onSubmit = () => {
@@ -53,6 +53,10 @@ const onSubmit = () => {
 }
 const onFailed = () => {
   console.log('failed')
+}
+const getValidateCode = () => {
+  console.log('getValidateCode')
+  http.post('/validation_codes', { email: formData.email })
 }
 </script>
 <style scoped lang="scss">
