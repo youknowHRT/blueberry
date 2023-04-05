@@ -3,7 +3,7 @@
     <MainLayout :showTabbar="false">
       <template #header>
         <div class="loginTitle">
-          <IconLayoutLeft />
+          <IconLayoutLeft @click="handleRouteBack"/>
           <h3>登录</h3>
         </div>
       </template>
@@ -18,17 +18,23 @@
             name="email"
             label="邮箱地址"
             placeholder="邮箱地址"
-            :rules="[{ required: true, message: '请填写邮箱地址' }, { pattern: /.+@.+/, message: '请填写正确的邮箱地址' }]"
+            :rules="[
+              { required: true, message: '请填写邮箱地址' },
+              { pattern: /.+@.+/, message: '请填写正确的邮箱地址' }
+            ]"
           />
           <van-field
-            v-model="formData.password"
-            name="password"
+            v-model="formData.code"
+            name="code"
             label="验证码"
             placeholder="请填写验证码"
             :rules="[{ required: true, message: '请填写验证码' }]"
           >
             <template #button>
-              <van-button size="small" color="#5c33be" @click="getValidateCode">发送验证码</van-button>
+              <van-button class="validCodeBtn" :disabled="validCodeBtnState"
+                size="small" color="#5c33be" @click="getValidateCode">
+                {{ validCodeBtnState ? `${count}秒后可重新发送` : '发送验证码' }}
+              </van-button>
             </template>
           </van-field>
           <div class="submitBtnRow">
@@ -43,24 +49,58 @@
 import { ref, reactive } from 'vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 import { http } from '@/shared/Http'
-import { FormInstance } from 'vant';
+import { FormInstance } from 'vant'
+import { useRouter } from 'vue-router'
+import {useBool} from '@/hooks/useBool'
 const formData = reactive({
   email: '',
-  password: ''
+  code: ''
 })
 const refForm = ref<FormInstance>()
+const router = useRouter()
+const {ref: validCodeBtnState,on: validCodeBtnDisabled, off: validCodeBtnUse} = useBool(false)
 const onSubmit = () => {
-  console.log('login')
+  http
+    .post<{ jwt: string }>('/session', formData, { _autoLoading: true })
+    .then((res) => {
+      localStorage.setItem('jwt', res.data.jwt)
+      router.push('/')
+    })
+    .catch((err) => {
+      throw err
+    })
 }
 const onFailed = () => {
-  console.log('failed')
+  console.log('Login failed!')
+}
+const count = ref<number>(5)
+const startCountDown = () => {
+  validCodeBtnDisabled()
+  const timer = setInterval(() => {
+    if (count.value <= 0) {
+      clearInterval(timer)
+      validCodeBtnUse()
+      count.value = 5
+    } else {
+      count.value--
+    }
+  }, 1000)
 }
 const getValidateCode = () => {
-  refForm.value!.validate('email').then(_=>{
-    http.post('/validation_codes', { email: formData.email }, {_autoLoading: true})
-  }).catch(err=>{
-    throw err
-  })
+  startCountDown()
+  refForm
+    .value!.validate('email')
+    .then((_) => {
+      http.post('/validation_codes', { email: formData.email }, { _autoLoading: true })
+    })
+    .catch((err) => {
+      validCodeBtnUse()
+      throw err
+    })
+}
+const handleRouteBack = () => {
+  console.log('back')
+  // router.back()
 }
 </script>
 <style scoped lang="scss">
@@ -91,6 +131,9 @@ const getValidateCode = () => {
   }
   .loginForm {
     padding-top: 32px;
+    .validCodeBtn{
+      width: 10em
+    }
     .submitBtnRow {
       margin: 48px 16px 0 16px;
     }
