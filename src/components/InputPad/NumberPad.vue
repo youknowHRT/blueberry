@@ -36,16 +36,16 @@ const padForm = reactive({
   amount: '',
   date: ''
 })
-const showCalendar = ref<boolean>(false)
+const refDate = ref<string[]>([])
 onMounted(() => {
   padForm.date = dayjs().format('YYYY-MM-DD')
   refDate.value = padForm.date.split('-')
 })
-const refDate = ref<string[]>([])
 const handleDateChange = (value: Record<string, any>) => {
   console.log(value, '🍎')
   padForm.date = value.selectedValues.join('-')
 }
+const showCalendar = ref<boolean>(false)
 const handleDateConfirm = () => {
   showCalendar.value = false
   padForm.date = refDate.value.join('-')
