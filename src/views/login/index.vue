@@ -12,18 +12,17 @@
         <h3>蓝莓记账</h3>
       </section>
       <section class="loginForm">
-        <van-form @submit="onSubmit" @failed="onFailed">
+        <van-form @submit="onSubmit" @failed="onFailed" ref="refForm">
           <van-field
             v-model="formData.email"
-            name="邮箱地址"
+            name="email"
             label="邮箱地址"
             placeholder="邮箱地址"
-            :rules="[{ required: true, message: '请填写邮箱地址' }]"
+            :rules="[{ required: true, message: '请填写邮箱地址' }, { pattern: /.+@.+/, message: '请填写正确的邮箱地址' }]"
           />
           <van-field
             v-model="formData.password"
-            type="password"
-            name="验证码"
+            name="password"
             label="验证码"
             placeholder="请填写验证码"
             :rules="[{ required: true, message: '请填写验证码' }]"
@@ -44,10 +43,12 @@
 import { ref, reactive } from 'vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 import { http } from '@/shared/Http'
+import { FormInstance } from 'vant';
 const formData = reactive({
   email: '',
   password: ''
 })
+const refForm = ref<FormInstance>()
 const onSubmit = () => {
   console.log('login')
 }
@@ -55,8 +56,11 @@ const onFailed = () => {
   console.log('failed')
 }
 const getValidateCode = () => {
-  console.log('getValidateCode')
-  http.post('/validation_codes', { email: formData.email })
+  refForm.value!.validate('email').then(_=>{
+    http.post('/validation_codes', { email: formData.email }, {_autoLoading: true})
+  }).catch(err=>{
+    throw err
+  })
 }
 </script>
 <style scoped lang="scss">
