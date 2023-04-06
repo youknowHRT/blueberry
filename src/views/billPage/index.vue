@@ -19,9 +19,22 @@
 
 <script lang="ts" setup name="BillPage">
 import BillList from './components/BillList.vue'
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import {http} from '@/shared/Http'
 const active = ref<string>('0')
 const list = reactive([])
+const balance = reactive({
+  income: 0,
+  expenses: 0,
+  balance:0
+})
+onMounted(()=>{
+  fetchItemsBalance()
+})
+const fetchItemsBalance=async()=>{
+  const response = await http.get('/items/balance', {}, {_mock: 'itemIndexBalance'})
+  Object.assign(balance,response.data)
+}
 </script>
 
 <style scoped lang="scss">

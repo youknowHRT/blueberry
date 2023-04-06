@@ -1,5 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { closeToast, showLoadingToast } from 'vant'
+import {mockItemIndexBalance} from '@/mock'
 
 type GetConfig = Omit<AxiosRequestConfig, 'url' | 'params' | 'methods'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'methods'>
@@ -62,5 +63,28 @@ http.instance.interceptors.response.use(
       alert('你太频繁了')
     }
     return Promise.reject(error)
+  }
+)
+
+const mock = (response: AxiosResponse) => {
+  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && location.hostname !== '192.168.3.57')
+    return
+  switch (response.config?._mock) {
+    case 'itemIndexBalance':
+      [response.status, response.data]=mockItemIndexBalance(response.config)
+      return true
+  }
+  return false
+}
+http.instance.interceptors.response.use(
+  (response) => {
+    mock(response)
+    if (response.status >= 400) throw response
+    return response
+  },
+  (error) => {
+    mock(error.response)
+    if (error.response.status >= 400) throw error
+    return error.response
   }
 )
