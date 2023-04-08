@@ -52,18 +52,21 @@ import { http } from '@/shared/Http'
 import { FormInstance } from 'vant'
 import { useRouter } from 'vue-router'
 import {useBool} from '@/hooks/useBool'
+import { useMeStore } from '@/store/useMeStore'
 const formData = reactive({
   email: '',
   code: ''
 })
 const refForm = ref<FormInstance>()
 const router = useRouter()
+const meStore = useMeStore()
 const {ref: validCodeBtnState,on: validCodeBtnDisabled, off: validCodeBtnUse} = useBool(false)
 const onSubmit = () => {
   http
     .post<{ jwt: string }>('/session', formData, { _autoLoading: true })
     .then((res) => {
       localStorage.setItem('jwt', res.data.jwt)
+      meStore.refreshMe()
       router.push('/')
     })
     .catch((err) => {
