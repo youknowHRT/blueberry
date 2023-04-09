@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { closeToast, showLoadingToast } from 'vant'
-import {mockItemIndexBalance} from '@/mock'
+import {mockItemIndexBalance, mockItemIndex} from '@/mock'
 
 type GetConfig = Omit<AxiosRequestConfig, 'url' | 'params' | 'methods'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'methods'>
@@ -75,6 +75,9 @@ const mock = (response: AxiosResponse) => {
   switch (response.config?._mock) {
     case 'itemIndexBalance':
       [response.status, response.data]=mockItemIndexBalance(response.config)
+      return true
+    case 'itemIndex':
+      [response.status, response.data]=mockItemIndex(response.config)
       return true
   }
   return false

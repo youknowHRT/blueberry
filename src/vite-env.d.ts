@@ -24,6 +24,14 @@ declare global {
   type Resource<T>={
     resource: T,
   }
+  type Resources<T>={
+    resources: T[],
+    pager:{
+      page: number,
+      per_page: number,
+      count: number,
+    }
+  }
   type Tag = {
     id: number;
     user_id: number;

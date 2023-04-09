@@ -21,6 +21,8 @@
 import BillList from './components/BillList.vue'
 import { ref, reactive, onMounted } from 'vue'
 import {http} from '@/shared/Http'
+import { useItemStore } from '@/store/useItemStore'
+import {useAfterMe} from '@/hooks/useAfterMe'
 const active = ref<string>('0')
 const list = reactive([])
 const balance = reactive({
@@ -28,13 +30,13 @@ const balance = reactive({
   expenses: 0,
   balance:0
 })
-onMounted(()=>{
-  fetchItemsBalance()
-})
 const fetchItemsBalance=async()=>{
   const response = await http.get('/items/balance', {}, {_mock: 'itemIndexBalance'})
   Object.assign(balance,response.data)
 }
+useAfterMe(fetchItemsBalance)
+const itemStore = useItemStore(['curMonth','2023-4-1','2023-4-30'])
+useAfterMe(()=> itemStore.fetchFirstPage('2023-4-1','2023-4-30') )
 </script>
 
 <style scoped lang="scss">
