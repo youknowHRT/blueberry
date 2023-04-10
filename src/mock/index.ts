@@ -43,7 +43,7 @@ export const mockItemIndex: Mock = (config) => {
       tag_ids: [createId()],
       tags: [createTag()],
       happen_at: faker.date.past().toISOString(),
-      // kind: config.params.kind
+      kind: config.params.kind
     }))
   const createBody=(n=1)=>({
     resources: createItem(n),

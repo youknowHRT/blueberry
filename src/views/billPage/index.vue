@@ -2,16 +2,16 @@
   <div class="billPage">
     <van-tabs v-model:active="active" class="fullHeight">
       <van-tab title="本月" name="curMonth">
-        <BillList :list="list" />
+        <BillList :list="itemStore.items" :balance="balance"/>
       </van-tab>
       <van-tab title="上月" name="lastMonth">
-        <BillList :list="list" />
+        <BillList :list="itemStore.items" />
       </van-tab>
       <van-tab title="今年" name="curYear">
-        <BillList :list="list" />
+        <BillList :list="itemStore.items" />
       </van-tab>
       <van-tab title="自定义时间" name="custom">
-        <BillList :list="list" />
+        <BillList :list="itemStore.items" />
       </van-tab>
     </van-tabs>
   </div>
@@ -24,14 +24,16 @@ import {http} from '@/shared/Http'
 import { useItemStore } from '@/store/useItemStore'
 import {useAfterMe} from '@/hooks/useAfterMe'
 const active = ref<string>('0')
-const list = reactive([])
+// const list = reactive<Item[]>([])
 const balance = reactive({
   income: 0,
   expenses: 0,
   balance:0
 })
 const fetchItemsBalance=async()=>{
-  const response = await http.get('/items/balance', {}, {_mock: 'itemIndexBalance'})
+  const response = await http.get('/items/balance',
+    {happened_after:'2023-4-1',happened_before:'2023-4-30'},
+    {_mock: 'itemIndexBalance'})
   Object.assign(balance,response.data)
 }
 useAfterMe(fetchItemsBalance)
