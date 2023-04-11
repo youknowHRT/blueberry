@@ -40,12 +40,13 @@ export const useItemStore = (id: string | string[]) => {
         }
         this.hasMore = (pager.page - 1) * pager.per_page + resources.length < pager.count
         this.page += 1
+        return response
       },
       async fetchMore(startDate, endDate) {
-        this._fetch(false, startDate, endDate)
+        return this._fetch(false, startDate, endDate)
       },
       async fetchFirstPage(startDate, endDate) {
-        this._fetch(true, startDate, endDate)
+        return this._fetch(true, startDate, endDate)
       }
     }
   })()

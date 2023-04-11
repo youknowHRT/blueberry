@@ -22,7 +22,7 @@
         <ul>
           <li v-for="item in list" :key="item.id">
             <div class="icon">
-              🍊
+              {{item.tags[0].sign}}
             </div>
             <div class="detail">
               <div class="message">
