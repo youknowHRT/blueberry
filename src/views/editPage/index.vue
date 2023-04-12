@@ -11,7 +11,7 @@
 </template>
 <script lang="ts" setup name="EditPage">
 import { ref, reactive } from 'vue'
-import NumberPad from '@/components/InputPad/NumberPad.vue'
+import NumberPad from '@/components/inputPad/NumberPad.vue'
 const active = ref<string>('expense')
 </script>
 <style scoped lang="scss">

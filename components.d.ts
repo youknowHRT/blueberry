@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CustomTimeCard: typeof import('./src/components/overlayCards/CustomTimeCard.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconLayoutBill: typeof import('~icons/layout/bill')['default']
     IconLayoutChart: typeof import('~icons/layout/chart')['default']
@@ -22,9 +23,8 @@ declare module '@vue/runtime-core' {
     IconSvgCloud: typeof import('~icons/svg/cloud')['default']
     IconSvgMangosteen: typeof import('~icons/svg/mangosteen')['default']
     IconSvgPig: typeof import('~icons/svg/pig')['default']
-    InputPad: typeof import('./src/components/InputPad/InputPad.vue')['default']
     LineChart: typeof import('./src/components/charts/LineChart.vue')['default']
-    NumberPad: typeof import('./src/components/InputPad/NumberPad.vue')['default']
+    NumberPad: typeof import('./src/components/inputPad/NumberPad.vue')['default']
     PieChart: typeof import('./src/components/charts/PieChart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
