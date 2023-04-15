@@ -1,6 +1,6 @@
 <template>
   <div class="billListWrap">
-    <van-empty v-if="props.list.length === 0" description="暂无数据" />
+    <van-empty v-if="list.length === 0" description="暂无数据" />
     <section v-else>
       <header>
         <div class="balanceBox">
@@ -30,9 +30,13 @@
                 <span class="sub">{{convertDate(item.happen_at)}}</span>
               </div>
               <div class="amount">
-                ¥2008
+                ¥<span>{{ item.amount }}</span>
               </div>
             </div>
+          </li>
+          <li class="bottomFuncRow">
+            <span v-if="hasMore">显示更多</span>
+            <span v-else>没有更多</span>
           </li>
         </ul>
       </main>
@@ -40,18 +44,21 @@
   </div>
 </template>
 <script lang="ts" setup name="BillList">
-import {PropType} from 'vue'
+import {PropType,computed} from 'vue'
+import { UseItemStore } from '@/store/useItemStore'
 import dayjs from 'dayjs';
 const props = defineProps({
-  list: {
-    type: Array as PropType<Item[]>,
-    default: []
+  storeDate: {
+    type: Object as PropType<UseItemStore>,
+      required: true
   },
   balance: {
     type: Object,
     default: {}
-  }
+  },
 })
+const list = computed(() => props.storeDate.items)
+const hasMore = computed(() => props.storeDate.hasMore)
 const convertDate = (date: string) => {
   return dayjs(date).format('YYYY-MM-DD');
 }
@@ -94,6 +101,7 @@ const convertDate = (date: string) => {
       ul{
         height: 100%;
         overflow-y: auto;
+        padding-bottom: 16px;
         li{
           display: flex;
           padding: 12px 16px;
@@ -120,7 +128,6 @@ const convertDate = (date: string) => {
               display: flex;
               flex-direction: column;
               justify-content: space-between;
-              // row-gap: 4px;
               height: 100%;
               .sub{
                 color:var(--list-sub-text-color)
@@ -134,6 +141,13 @@ const convertDate = (date: string) => {
             }
           }
         }
+      }
+      .bottomFuncRow{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        color: var(--list-sub-text-color);
       }
     }
   }

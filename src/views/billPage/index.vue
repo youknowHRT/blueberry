@@ -2,16 +2,16 @@
   <div class="billPage">
     <van-tabs v-model:active="active" :before-change="beforeTabChange" ref="refTab" class="fullHeight">
       <van-tab title="本月" name="curMonth">
-        <BillList :list="curMonthStore.items" :balance="balance" />
+        <BillList :storeDate="curMonthStore" :balance="balance"/>
       </van-tab>
       <van-tab title="上月" name="lastMonth">
-        <BillList :list="lastMonthStore.items" :balance="balance" />
+        <BillList :storeDate="lastMonthStore" :balance="balance"/>
       </van-tab>
       <van-tab title="今年" name="curYear">
-        <BillList :list="curYearStore.items" :balance="balance" />
+        <BillList :storeDate="curYearStore" :balance="balance"/>
       </van-tab>
       <van-tab title="自定义时间" name="custom">
-        <BillList :list="curMonthStore.items" :balance="balance" />
+        <BillList :storeDate="customStore!" :balance="balance" />
       </van-tab>
     </van-tabs>
   </div>
@@ -22,7 +22,7 @@
 
 <script lang="ts" setup name="BillPage">
 import BillList from './components/BillList.vue'
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive } from 'vue'
 import { http } from '@/shared/Http'
 import { useItemStore, UseItemStore } from '@/store/useItemStore'
 import { useAfterMe } from '@/hooks/useAfterMe'
@@ -62,12 +62,12 @@ const fetchItemsBalance = async (dateObj: Record<string, string>) => {
   return response
 }
 useAfterMe(() => fetchItemsBalance(curMonthDate))
-let curMonthStore = useItemStore(['curMonth', curMonthDate.happened_after, curMonthDate.happened_before])
+let curMonthStore = reactive<UseItemStore>(useItemStore(['curMonth', curMonthDate.happened_after, curMonthDate.happened_before]))
 useAfterMe(() => curMonthStore.fetchFirstPage(curMonthDate.happened_after, curMonthDate.happened_before))
 
-let lastMonthStore = useItemStore(['lastMonth', lastMonthDate.happened_after, lastMonthDate.happened_before])
-let curYearStore = useItemStore(['curYear', curYearDate.happened_after, curYearDate.happened_before])
-let customStore: UseItemStore|undefined
+let lastMonthStore = reactive<UseItemStore>(useItemStore(['lastMonth', lastMonthDate.happened_after, lastMonthDate.happened_before]))
+let curYearStore = reactive<UseItemStore>(useItemStore(['curYear', curYearDate.happened_after, curYearDate.happened_before]))
+let customStore=ref<UseItemStore>()
 type tabName = 'curMonth' | 'lastMonth' | 'curYear' | 'custom'
 const checkDateChange = (tab: tabName) => {
   if (tab === 'curMonth') {
@@ -75,25 +75,25 @@ const checkDateChange = (tab: tabName) => {
     if (curMonthDate.happened_after !== monthFirstDay) {
       curMonthDate.happened_after = monthFirstDay
       curMonthDate.happened_before = dayjs().endOf('month').format('YYYY-MM-DD')
-      curMonthStore = useItemStore(['curMonth', curMonthDate.happened_after, curMonthDate.happened_before])
+      Object.assign(curMonthStore, useItemStore(['curMonth', curMonthDate.happened_after, curMonthDate.happened_before]))
     }
   } else if (tab === 'lastMonth') {
     const monthFirstDay = dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD')
     if (lastMonthDate.happened_after !== monthFirstDay) {
       lastMonthDate.happened_after = monthFirstDay
       lastMonthDate.happened_before = dayjs().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')
-      lastMonthStore = useItemStore(['lastMonth', lastMonthDate.happened_after, lastMonthDate.happened_before])
+      Object.assign(lastMonthStore, useItemStore(['lastMonth', lastMonthDate.happened_after, lastMonthDate.happened_before]))
     }
   } else if (tab === 'curYear') {
     const yearFirstDay = dayjs().startOf('year').format('YYYY-MM-DD')
     if (curYearDate.happened_after !== yearFirstDay) {
       curYearDate.happened_after = yearFirstDay
       curYearDate.happened_before = dayjs().endOf('year').format('YYYY-MM-DD')
-      curYearStore = useItemStore(['curYear', curYearDate.happened_after, curYearDate.happened_before])
+      Object.assign(curYearStore, useItemStore(['curYear', curYearDate.happened_after, curYearDate.happened_before]))
     }
   } else if (tab === 'custom') {
-    if(customStore !== undefined)customStore.$reset()
-    customStore = useItemStore(['custom', customDate.happened_after, customDate.happened_before])
+    if(customStore.value !== undefined)customStore.value.$reset()
+    customStore.value = useItemStore(['custom', customDate.happened_after, customDate.happened_before])
   }
 }
 const customTrigger = ref(false) //用于处理 自定义时间tab的点击事件的状态
@@ -169,8 +169,8 @@ const beforeTabChange = (name: string) => {
       customTrigger.value = false
 
       const promiseArray = []
-      if( customStore!.items.length === 0) {
-        const promise1 = customStore!.fetchFirstPage(customDate.happened_after, customDate.happened_before)
+      if( customStore.value!.items.length === 0) {
+        const promise1 = customStore.value!.fetchFirstPage(customDate.happened_after, customDate.happened_before)
         promiseArray.push(promise1)
       }
       const promise2 = fetchItemsBalance(customDate)
@@ -201,8 +201,7 @@ const moveToCustom = (val: DataObj) => {
   showPop.value = false
   customTrigger.value = true
   const customDateChanged = Object.keys(val).some((key) => {
-    return customDate[key as keyof DataObj] !== val[key as keyof DataObj] ||
-    customDate[key as keyof DataObj] !== ''
+    return customDate[key as keyof DataObj] !== val[key as keyof DataObj]
   })
   if (customDateChanged) {
     Object.assign(customDate, val)
