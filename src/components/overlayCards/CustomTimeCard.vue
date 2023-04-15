@@ -74,7 +74,13 @@ const handleEndConfirm = ({ selectedValues }: Record<string, any[]>) => {
 const emit = defineEmits(['cancel', 'success'])
 const refForm = ref<FormInstance>()
 const onSubmit = () => {
-  console.log('yes',formData)
+  console.log('yes', formData)
+  const happenedAfterRef = ref(new Date(formData.happened_after).getTime())
+  const happenedBeforeRef = ref(new Date(formData.happened_before).getTime())
+
+  if (happenedAfterRef.value > happenedBeforeRef.value) {
+    [formData.happened_before, formData.happened_after] = [formData.happened_after, formData.happened_before]
+  }
   emit('success', formData)
 }
 const handleCancel = () => {

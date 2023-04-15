@@ -26,11 +26,11 @@
             </div>
             <div class="detail">
               <div class="message">
-                <span>标签描述</span>
-                <span>日期</span>
+                <span>{{item.tags.map(t=>t.name).join('&')}}</span>
+                <span class="sub">{{convertDate(item.happen_at)}}</span>
               </div>
               <div class="amount">
-                2008
+                ¥2008
               </div>
             </div>
           </li>
@@ -41,6 +41,7 @@
 </template>
 <script lang="ts" setup name="BillList">
 import {PropType} from 'vue'
+import dayjs from 'dayjs';
 const props = defineProps({
   list: {
     type: Array as PropType<Item[]>,
@@ -51,6 +52,9 @@ const props = defineProps({
     default: {}
   }
 })
+const convertDate = (date: string) => {
+  return dayjs(date).format('YYYY-MM-DD');
+}
 </script>
 <style scoped lang="scss">
 .billListWrap{
@@ -90,14 +94,20 @@ const props = defineProps({
       ul{
         height: 100%;
         overflow-y: auto;
-        padding: 0 16px 16px;
         li{
           display: flex;
+          padding: 12px 16px;
+          column-gap: 6px;
+          border-bottom: 1px solid var(--list-border-color);
           .icon{
             border-radius: 50%;
-            border: 1px solid red;
             width: 48px;
             height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6em;
+            background-color: var(--tag-bg);
           }
           .detail{
             flex: 1;
@@ -105,14 +115,22 @@ const props = defineProps({
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid blue;
+            padding: 0 4px;
             .message{
               display: flex;
               flex-direction: column;
               justify-content: space-between;
-              span{
-                font-size: 12px;
+              // row-gap: 4px;
+              height: 100%;
+              .sub{
+                color:var(--list-sub-text-color)
               }
+              span{
+                font-size: 16px;
+              }
+            }
+            .amount{
+              color: var(--amount-text-color);
             }
           }
         }
