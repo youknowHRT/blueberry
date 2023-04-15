@@ -51,3 +51,4 @@ export const useItemStore = (id: string | string[]) => {
     }
   })()
 }
+export type UseItemStore = ReturnType<typeof useItemStore>;

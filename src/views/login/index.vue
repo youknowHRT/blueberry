@@ -27,7 +27,7 @@
             v-model="formData.code"
             name="code"
             label="验证码"
-            placeholder="请填写验证码"
+            placeholder="验证码"
             :rules="[{ required: true, message: '请填写验证码' }]"
           >
             <template #button>
