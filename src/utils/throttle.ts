@@ -1,5 +1,5 @@
 export const throttle = (fn: Function, wait: number) => {
-  let timer: number | undefined = undefined
+  let timer: ReturnType<typeof setTimeout> | undefined = undefined
   return (...args: [any]) => {
     if (!timer) {
       fn(...args)
