@@ -25,7 +25,7 @@ export const useItemStore = (id: string | string[]) => {
           {
             happened_after: startDate,
             happened_before: endDate,
-            page: firstPage ? 1 : this.page + 1
+            page: this.page
           },
           {
             _mock: 'itemIndex',
@@ -46,6 +46,7 @@ export const useItemStore = (id: string | string[]) => {
         return this._fetch(false, startDate, endDate)
       },
       async fetchFirstPage(startDate, endDate) {
+        this.page=1
         return this._fetch(true, startDate, endDate)
       }
     }

@@ -35,7 +35,7 @@
             </div>
           </li>
           <li class="bottomFuncRow">
-            <span v-if="hasMore">显示更多</span>
+            <span v-if="hasMore" v-scroll-load="getMoreData">显示更多</span>
             <span v-else>没有更多</span>
           </li>
         </ul>
@@ -47,6 +47,7 @@
 import {PropType,computed} from 'vue'
 import { UseItemStore } from '@/store/useItemStore'
 import dayjs from 'dayjs';
+import vScrollLoad from '@/directives/scrollLoad'
 const props = defineProps({
   storeDate: {
     type: Object as PropType<UseItemStore>,
@@ -56,11 +57,19 @@ const props = defineProps({
     type: Object,
     default: {}
   },
+  dateParam: {
+    type: Object as PropType<ItemListDateParam>,
+    default: {}
+  }
 })
 const list = computed(() => props.storeDate.items)
 const hasMore = computed(() => props.storeDate.hasMore)
 const convertDate = (date: string) => {
   return dayjs(date).format('YYYY-MM-DD');
+}
+const getMoreData = () => {
+  console.log('getMoreData🍉')
+  props.storeDate.fetchMore(props.dateParam.happened_after, props.dateParam.happened_before)
 }
 </script>
 <style scoped lang="scss">
@@ -106,7 +115,9 @@ const convertDate = (date: string) => {
           display: flex;
           padding: 12px 16px;
           column-gap: 6px;
-          border-bottom: 1px solid var(--list-border-color);
+          &+li{
+            border-top: 1px solid var(--list-border-color);
+          }
           .icon{
             border-radius: 50%;
             width: 48px;

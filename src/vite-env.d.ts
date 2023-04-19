@@ -7,7 +7,7 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
-export {};
+export {}
 
 declare global {
   type PadBtn = {
@@ -17,35 +17,39 @@ declare global {
   }
   type JSONValue = string | number | boolean | null | Record<string, JSONValue> | JSONValue[]
 
-  type User={
-    id: number,
-    email: string,
+  type User = {
+    id: number
+    email: string
   }
-  type Resource<T>={
-    resource: T,
+  type Resource<T> = {
+    resource: T
   }
-  type Resources<T>={
-    resources: T[],
-    pager:{
-      page: number,
-      per_page: number,
-      count: number,
+  type Resources<T> = {
+    resources: T[]
+    pager: {
+      page: number
+      per_page: number
+      count: number
     }
   }
   type Tag = {
-    id: number;
-    user_id: number;
-    name: string;
-    sign: string;
-    kind: 'expenses' | 'income';
-  };
+    id: number
+    user_id: number
+    name: string
+    sign: string
+    kind: 'expenses' | 'income'
+  }
   type Item = {
-    id: number;
-    user_id: number;
-    amount: number;
-    tag_ids: number[];
-    tags: Tag[],
-    happen_at: string;
-    kind: 'expenses' | 'income';
-  };
+    id: number
+    user_id: number
+    amount: number
+    tag_ids: number[]
+    tags: Tag[]
+    happen_at: string
+    kind: 'expenses' | 'income'
+  }
+  type ItemListDateParam = {
+    happened_after: string
+    happened_before: string
+  }
 }
