@@ -2,7 +2,7 @@
   <div class="login">
     <MainLayout :showTabbar="false">
       <template #header>
-        <div class="loginTitle">
+        <div class="operateTitle">
           <IconLayoutLeft @click="handleRouteBack"/>
           <h3>登录</h3>
         </div>
@@ -108,13 +108,6 @@ const handleRouteBack = () => {
 </script>
 <style scoped lang="scss">
 .login {
-  .loginTitle {
-    color: #fff;
-    display: flex;
-    column-gap: 12px;
-    align-items: center;
-    font-size: 24px;
-  }
   .logoSec {
     display: flex;
     flex-direction: column;

@@ -68,7 +68,6 @@ const convertDate = (date: string) => {
   return dayjs(date).format('YYYY-MM-DD');
 }
 const getMoreData = () => {
-  console.log('getMoreData🍉')
   props.storeDate.fetchMore(props.dateParam.happened_after, props.dateParam.happened_before)
 }
 </script>

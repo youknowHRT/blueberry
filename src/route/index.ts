@@ -39,6 +39,14 @@ const routes: RouteRecordRaw[]= [
   {
     path: '/welcome',
     component: () => import('@/views/welcome/index.vue')
+  },
+  {
+    path: '/tagPage/create',
+    component: () => import('@/views/tagPage/index.vue')
+  },
+  {
+    path: '/tagPage/:id/edit',
+    component: () => import('@/views/tagPage/index.vue')
   }
 ]
 
