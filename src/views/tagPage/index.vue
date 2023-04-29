@@ -8,32 +8,30 @@
       </div>
     </template>
     <section class="tagEditSec">
-      <main class="formSec">
-        <van-form @submit="onSubmit" @failed="onFailed" ref="refForm">
-          <van-field
-            v-model="formData.name"
-            name="name"
-            label="标签名"
-            placeholder="请填写标签名"
-            :rules="[ { required: true, message: '标签名必填' } ]"
-          />
-          <van-field
+      <van-form @submit="onSubmit" @failed="onFailed" ref="refForm">
+        <van-field
+          v-model="formData.name"
+          name="name"
+          label="标签名"
+          placeholder="请填写标签名"
+          :rules="[ { required: true, message: '标签名必填' },
+          { validator: (val)=>{return /^.{1,4}$/.test(val)}, message:'只能填写1-4个字符' } ]"
+        />
+        <van-field
             v-model="formData.sign"
+            class="specialSignField"
             name="sign"
             label="符号"
-            placeholder="请选择符号"
+            placeholder="请选择下方符号"
             readonly
-            :rules="[ { required: true, message: '符号必选' } ]"
-            @click="showSignBD = true"
+            :rules="[ { required: true, message: '请选择符号' } ]"
           />
-          <van-popup v-model:show="showSignBD" position="bottom">
-            signbg
-          </van-popup>
-          <div class="tagSubmitWrap">
-            <van-button block native-type="submit" color="#5c33be"> 确定 </van-button>
-          </div>
-        </van-form>
-      </main>
+        <EmojiSelector v-model:sign="formData.sign"/>
+        <p>记账时长按标签即可进行编辑</p>
+        <div class="tagSubmitWrap">
+          <van-button block native-type="submit" color="#5c33be"> 确定 </van-button>
+        </div>
+      </van-form>
       <footer v-if="id">
         删除
       </footer>
@@ -44,6 +42,7 @@
 import MainLayout from '@/layouts/MainLayout.vue'
 import { ref, reactive,computed} from 'vue'
 import { useRoute } from 'vue-router';
+import EmojiSelector from '@/components/selector/EmojiSelector.vue'
 const route = useRoute()
 const id = computed(()=>{
   return route.params?.id
@@ -65,15 +64,30 @@ const onFailed = () => {
 </script>
 <style scoped lang='scss'>
 .tagEditSec{
-  padding: 12px 0;
-  // border: 10px solid purple;
   height: 100%;
   overflow-y: scroll;
-  .formSec{
+  .van-form{
+    display: flex;
+    flex-direction: column;
     height: 100%;
-    // border: 5px solid blue;
+    padding-top: 12px;
+    .specialSignField.van-field{
+      :deep(.van-field__control){
+        font-size: 22px;
+        &::-webkit-input-placeholder{
+          font-size: 14px;
+        }
+      }
+      &::after{
+        display: none;
+      }
+    }
+    p{
+      padding: 16px 0;
+      text-align: center;
+    }
     .tagSubmitWrap{
-      margin: 28px 16px 0 16px;
+      margin: 24px 16px;
     }
   }
 }

@@ -3,7 +3,7 @@
     <div class="customTimeCard" @click.stop>
       <header>请选择时间</header>
       <main>
-        <van-form @submit="onSubmit" ref="refForm">
+        <van-form ref="refForm">
           <van-field
             v-model="formData.happened_after"
             name="happened_after"
@@ -41,7 +41,7 @@
           </van-popup>
           <footer>
             <button @click="handleCancel">取消</button>
-            <button type="submit">确定</button>
+            <button @click="onSubmit">确定</button>
           </footer>
         </van-form>
       </main>
@@ -74,7 +74,6 @@ const handleEndConfirm = ({ selectedValues }: Record<string, any[]>) => {
 const emit = defineEmits(['cancel', 'success'])
 const refForm = ref<FormInstance>()
 const onSubmit = () => {
-  console.log('yes', formData)
   const happenedAfterRef = ref(new Date(formData.happened_after).getTime())
   const happenedBeforeRef = ref(new Date(formData.happened_before).getTime())
 

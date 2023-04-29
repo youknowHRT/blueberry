@@ -10,6 +10,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     CustomTimeCard: typeof import('./src/components/overlayCards/CustomTimeCard.vue')['default']
+    EmojiSelector: typeof import('./src/components/selector/EmojiSelector.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconLayoutBill: typeof import('~icons/layout/bill')['default']
     IconLayoutChart: typeof import('~icons/layout/chart')['default']
