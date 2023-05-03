@@ -41,22 +41,31 @@
 <script lang='ts' setup name='TagPage'>
 import MainLayout from '@/layouts/MainLayout.vue'
 import { ref, reactive,computed} from 'vue'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import EmojiSelector from '@/components/selector/EmojiSelector.vue'
+import { http } from '@/shared/Http'
 const route = useRoute()
 const id = computed(()=>{
   return route.params?.id
 })
 const formData = reactive({
   name: '',
-  sign: ''
+  sign: '',
+  kind:''
 })
 const showSignBD = ref(false)
 const handleRouteBack = () => {
   // console.log('back')
 }
+const router = useRouter()
 const onSubmit = () => {
   console.log('submit')
+  http.post('/tags', formData, { _autoLoading: true }).then(res=>{
+    console.log(res,'tag')
+    router.back()
+  }).catch(err=>{
+    console.log(err)
+  })
 }
 const onFailed = () => {
   console.log('failed')

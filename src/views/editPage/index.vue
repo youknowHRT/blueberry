@@ -2,7 +2,9 @@
   <div class="editPage">
     <section class="tagsBox">
       <van-tabs v-model:active="active" class="fullHeight">
-        <van-tab title="支出" name="expense"> 支出 </van-tab>
+        <van-tab title="支出" name="expenses">
+          <Tags kind="expenses" />
+        </van-tab>
         <van-tab title="收入" name="income"> 收入 </van-tab>
       </van-tabs>
     </section>
@@ -10,8 +12,9 @@
   </div>
 </template>
 <script lang="ts" setup name="EditPage">
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import NumberPad from '@/components/inputPad/NumberPad.vue'
+import Tags from '@/views/editPage/components/Tags.vue'
 const active = ref<string>('expense')
 </script>
 <style scoped lang="scss">
