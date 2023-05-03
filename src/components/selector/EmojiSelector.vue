@@ -1,15 +1,5 @@
 <template>
   <div class="emojiSelector van-cell">
-  <!-- <div class="emojiSelector van-cell"> -->
-    <!-- <div class="topShowBar">
-      <div class="van-cell__title van-field__label">符号</div>
-      <div class="van-cell__value van-field__value">
-        <div class="van-field__body">
-          <input type="text" id="van-field-8-input" name="name" class="van-field__control"
-            :value="sign" disabled placeholder="请选择符号" aria-labelledby="van-field-8-label">
-        </div>
-      </div>
-    </div> -->
     <section class="emojiTable">
       <nav>
         <span @click="handleChooseTag(sIndex)" v-for="(sItem,sIndex) in table">{{sItem[0]}}</span>

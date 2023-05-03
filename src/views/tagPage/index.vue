@@ -33,7 +33,7 @@
         </div>
       </van-form>
       <footer v-if="id">
-        删除
+        <van-button block type="danger"> 删除标签（对应记账也会被删除） </van-button>
       </footer>
     </section>
   </MainLayout>  
@@ -89,6 +89,9 @@ const onFailed = () => {
     .tagSubmitWrap{
       margin: 24px 16px;
     }
+  }
+  footer{
+    padding: 16px;
   }
 }
 </style>
