@@ -1,18 +1,27 @@
 <template>
   <div class="tagsWrap">
     <ul>
-      <li v-for="tag in tags" :key="tag.id">
-        <span>{{ tag.sign }}</span>
-        <span>{{ tag.name }}</span>
+      <li @click="addNewTag">
+        <span class="emojiWrap addIcon"><IconSvgAdd/></span>
+        <span class="emojiName">新增</span>
       </li>
+      <li v-for="tag in tags" :key="tag.id">
+        <span class="emojiWrap">{{ tag.sign }}</span>
+        <span class="emojiName">{{ tag.name.slice(0,4) }}</span>
+      </li>
+      <p class="bottomFuncRow">
+        <span v-if="hasMore" v-scroll-load="fetchTags">显示更多</span>
+        <span v-else>没有更多</span>
+      </p>
     </ul>
   </div>
 </template>
 <script lang="ts" setup name="Tags">
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import { http } from '@/shared/Http'
 import { AxiosResponse } from 'axios'
 import { onMounted } from 'vue'
+import vScrollLoad from '@/directives/scrollLoad'
 const props = defineProps({
   kind: {
     type: String,
@@ -24,7 +33,7 @@ const page = ref(0)
 const hasMore = ref(false)
 
 type Fetcher = () => Promise<AxiosResponse<Resources<Tag>>>
-const fetcher = () => {
+const fetcher:Fetcher = () => {
   return http.get<Resources<Tag>>(
     '/tags',
     {
@@ -37,29 +46,53 @@ const fetcher = () => {
     }
   )
 }
-const fetchTags = async (fn: Fetcher) => {
-  const response = await fn()
+const fetchTags = async () => {
+  const response = await fetcher()
   const { resources, pager } = response.data
-  console.log(response.data,'aaaaaaqiche🚗🚗🚗')
   tags.value.push(...resources)
   hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
   page.value += 1
 }
-
 onMounted(() => {
-  fetchTags(fetcher)
+  fetchTags()
 })
+const addNewTag = () => {
+  console.log('addNewTag')
+}
 </script>
 <style scoped lang="scss">
 .tagsWrap{
-  border: 5px solid red;
+  height: 100%;
+  padding: 12px 0;
   ul{
     display: flex;
     flex-wrap: wrap;
+    height: 100%;
+    overflow-y: scroll;
     li{
       width: 20vw;
+      height: 20vw*1.14;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      .emojiWrap{
+        height: 12vw;
+        width: 12vw;
+        background-color: var(--tag-bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 6vw;
+        &.addIcon svg{
+          height: 1.2em;
+          width: 1.2em;
+        }
+      }
+      .emojiName{
+        margin-top: 4px;
+        font-size: 12px;
+      }
     }
   }
 

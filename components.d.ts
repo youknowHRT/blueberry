@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     IconLayoutLeft: typeof import('~icons/layout/left')['default']
     IconLayoutMenu: typeof import('~icons/layout/menu')['default']
     IconLayoutUser: typeof import('~icons/layout/user')['default']
+    IconSvgAdd: typeof import('~icons/svg/add')['default']
     IconSvgCalendar: typeof import('~icons/svg/calendar')['default']
     IconSvgChart: typeof import('~icons/svg/chart')['default']
     IconSvgClock: typeof import('~icons/svg/clock')['default']

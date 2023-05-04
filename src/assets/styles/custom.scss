@@ -5,3 +5,11 @@
   align-items: center;
   font-size: 24px;
 }
+.bottomFuncRow{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  color: var(--list-sub-text-color);
+}

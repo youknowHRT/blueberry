@@ -152,13 +152,6 @@ const getMoreData = () => {
           }
         }
       }
-      .bottomFuncRow{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 40px;
-        color: var(--list-sub-text-color);
-      }
     }
   }
   
