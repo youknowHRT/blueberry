@@ -2,7 +2,7 @@
   <MainLayout :showTabbar="false">
     <template #header>
       <div class="operateTitle">
-        <IconLayoutLeft @click="handleRouteBack"/>
+        <BackIcon/>
         <h3 v-if="id">编辑标签</h3>
         <h3 v-else>新建标签</h3>
       </div>
@@ -51,11 +51,8 @@ const id = computed(()=>{
 const formData = reactive({
   name: '',
   sign: '',
-  kind:''
+  kind: route.query.kind
 })
-const handleRouteBack = () => {
-  // console.log('back')
-}
 const router = useRouter()
 const onSubmit = () => {
   console.log('submit')

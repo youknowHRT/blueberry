@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    BackIcon: typeof import('./src/components/functionalIcon/BackIcon.vue')['default']
     CustomTimeCard: typeof import('./src/components/overlayCards/CustomTimeCard.vue')['default']
     EmojiSelector: typeof import('./src/components/selector/EmojiSelector.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
