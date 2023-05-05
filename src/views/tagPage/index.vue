@@ -53,7 +53,6 @@ const formData = reactive({
   sign: '',
   kind:''
 })
-const showSignBD = ref(false)
 const handleRouteBack = () => {
   // console.log('back')
 }

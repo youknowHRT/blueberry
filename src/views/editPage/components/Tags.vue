@@ -22,6 +22,7 @@ import { http } from '@/shared/Http'
 import { AxiosResponse } from 'axios'
 import { onMounted } from 'vue'
 import vScrollLoad from '@/directives/scrollLoad'
+import { useRouter } from 'vue-router'
 const props = defineProps({
   kind: {
     type: String,
@@ -56,8 +57,10 @@ const fetchTags = async () => {
 onMounted(() => {
   fetchTags()
 })
+const router = useRouter()
 const addNewTag = () => {
   console.log('addNewTag')
+  router.push({path: '/tagPage/create', query:{kind:props.kind}})
 }
 </script>
 <style scoped lang="scss">

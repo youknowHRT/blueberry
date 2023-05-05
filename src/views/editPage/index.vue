@@ -5,7 +5,9 @@
         <van-tab title="支出" name="expenses">
           <Tags kind="expenses" />
         </van-tab>
-        <van-tab title="收入" name="income"> 收入 </van-tab>
+        <van-tab title="收入" name="income"> 
+          <Tags kind="income" />
+        </van-tab>
       </van-tabs>
     </section>
     <NumberPad />
