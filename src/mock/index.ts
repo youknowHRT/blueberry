@@ -95,3 +95,17 @@ export const mockTagIndex: Mock = (config) => {
     return [200, createBody(1)]
   }
 }
+
+//标签数据
+export const mockTagShow: Mock = (config)=>{
+  const createTag = (attrs?: any) => ({
+    id: createId(),
+    name: faker.lorem.word().slice(0,4),
+    sign: faker.internet.emoji(),
+    kind: 'expenses',
+    ...attrs
+  })
+  return [
+    200,{resource: createTag()}
+  ]
+}

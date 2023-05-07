@@ -1,13 +1,13 @@
 <template>
   <div class="tagsWrap">
-    <ul>
+    <ul @touchmove="handleTouchmove">
       <li @click="addNewTag">
-        <span class="emojiWrap addIcon"><IconSvgAdd/></span>
+        <span class="emojiWrap addIcon"><IconSvgAdd /></span>
         <span class="emojiName">新增</span>
       </li>
-      <li v-for="tag in tags" :key="tag.id">
+      <li v-for="tag in tags" :key="tag.id" @touchstart="startTouchTag($event, tag)" @touchend="endTouchTag">
         <span class="emojiWrap">{{ tag.sign }}</span>
-        <span class="emojiName">{{ tag.name.slice(0,4) }}</span>
+        <span class="emojiName">{{ tag.name.slice(0, 4) }}</span>
       </li>
       <p class="bottomFuncRow">
         <span v-if="hasMore" v-scroll-load="fetchTags">显示更多</span>
@@ -34,7 +34,7 @@ const page = ref(0)
 const hasMore = ref(false)
 
 type Fetcher = () => Promise<AxiosResponse<Resources<Tag>>>
-const fetcher:Fetcher = () => {
+const fetcher: Fetcher = () => {
   return http.get<Resources<Tag>>(
     '/tags',
     {
@@ -60,25 +60,44 @@ onMounted(() => {
 const router = useRouter()
 const addNewTag = () => {
   console.log('addNewTag')
-  router.push({path: '/tagPage/create', query:{kind:props.kind}})
+  router.push({ path: '/tagPage/create', query: { kind: props.kind } })
+}
+
+const currentTag = ref<HTMLDivElement>()
+const timer = ref<ReturnType<typeof setTimeout>>()
+const startTouchTag = (e: TouchEvent, tag: Tag) => {
+  e.preventDefault()
+  currentTag.value = e.target as HTMLDivElement
+  timer.value = setTimeout(() => {
+    router.push(`/tagPage/${tag.id}/edit?kind=${tag.kind}`)
+  }, 500)
+}
+const endTouchTag = () => {
+  clearTimeout(timer.value)
+}
+const handleTouchmove = (e: TouchEvent) => {
+  const touchEle = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY)
+  if (currentTag.value !== touchEle && currentTag.value?.contains(touchEle) === false) {
+    clearTimeout(timer.value)
+  }
 }
 </script>
 <style scoped lang="scss">
-.tagsWrap{
+.tagsWrap {
   height: 100%;
   padding: 12px 0;
-  ul{
+  ul {
     display: flex;
     flex-wrap: wrap;
     height: 100%;
     overflow-y: scroll;
-    li{
+    li {
       width: 20vw;
-      height: 20vw*1.14;
+      height: 20vw * 1.14;
       display: flex;
       flex-direction: column;
       align-items: center;
-      .emojiWrap{
+      .emojiWrap {
         height: 12vw;
         width: 12vw;
         background-color: var(--tag-bg);
@@ -87,17 +106,16 @@ const addNewTag = () => {
         align-items: center;
         justify-content: center;
         font-size: 6vw;
-        &.addIcon svg{
+        &.addIcon svg {
           height: 1.2em;
           width: 1.2em;
         }
       }
-      .emojiName{
+      .emojiName {
         margin-top: 4px;
         font-size: 12px;
       }
     }
   }
-
 }
 </style>

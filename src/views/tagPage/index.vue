@@ -33,25 +33,27 @@
         </div>
       </van-form>
       <footer v-if="id">
-        <van-button block type="danger"> 删除标签（对应记账也会被删除） </van-button>
+        <van-button block type="danger" @click="delAllTagData"> 删除标签（对应记账也会被删除） </van-button>
       </footer>
     </section>
   </MainLayout>  
 </template>
 <script lang='ts' setup name='TagPage'>
 import MainLayout from '@/layouts/MainLayout.vue'
-import { ref, reactive,computed} from 'vue'
+import { ref, reactive,computed,onMounted} from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import EmojiSelector from '@/components/selector/EmojiSelector.vue'
 import { http } from '@/shared/Http'
+import { showConfirmDialog,showDialog } from 'vant'
 const route = useRoute()
 const id = computed(()=>{
   return route.params?.id
 })
-const formData = reactive({
+const formData = reactive<Partial<Tag>>({
+  id: undefined,
   name: '',
   sign: '',
-  kind: route.query.kind
+  kind: route.query.kind!.toString() as 'expenses' | 'income'
 })
 const router = useRouter()
 const onSubmit = () => {
@@ -65,6 +67,35 @@ const onSubmit = () => {
 }
 const onFailed = () => {
   console.log('failed')
+}
+onMounted(async()=>{
+  if(id.value){
+    const response = await http.get<Resource<Tag>>(
+      `/tags/${id.value}`,{ },{_mock: 'tagShow'}
+    )
+    Object.assign(formData,response.data.resource)
+  }
+})
+const onError=()=>{
+  showDialog({
+    title: '错误',
+    message: '删除失败',
+    width: '320px'
+  })
+}
+const delAllTagData = async () => {
+  await showConfirmDialog({
+    title: '删除标签',
+    message: '删除标签将会删除该标签下的所有记账，是否继续？',
+    confirmButtonColor: '#f00',
+    overlay: true
+  })
+  await http.delete<Resource<Tag>>(
+    `/tags/${id.value}`,{ with_items:'true'})
+    .catch(onError)
+    setTimeout(() => {
+      router.back()
+    }, 1000);
 }
 </script>
 <style scoped lang='scss'>
