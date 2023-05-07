@@ -5,7 +5,7 @@
         <span class="emojiWrap addIcon"><IconSvgAdd /></span>
         <span class="emojiName">新增</span>
       </li>
-      <li v-for="tag in tags" :key="tag.id" @touchstart="startTouchTag($event, tag)" @touchend="endTouchTag">
+      <li v-for="tag in tags" :key="tag.id" @touchstart="startTouchTag($event, tag)" @touchend="endTouchTag" @click="onSelectTag(tag)">
         <span class="emojiWrap">{{ tag.sign }}</span>
         <span class="emojiName">{{ tag.name.slice(0, 4) }}</span>
       </li>
@@ -66,7 +66,6 @@ const addNewTag = () => {
 const currentTag = ref<HTMLDivElement>()
 const timer = ref<ReturnType<typeof setTimeout>>()
 const startTouchTag = (e: TouchEvent, tag: Tag) => {
-  e.preventDefault()
   currentTag.value = e.target as HTMLDivElement
   timer.value = setTimeout(() => {
     router.push(`/tagPage/${tag.id}/edit?kind=${tag.kind}`)
@@ -80,6 +79,12 @@ const handleTouchmove = (e: TouchEvent) => {
   if (currentTag.value !== touchEle && currentTag.value?.contains(touchEle) === false) {
     clearTimeout(timer.value)
   }
+}
+const chosenTagName = ref('')
+const emit= defineEmits(['update:modelValue'])
+const onSelectTag =(tag:Tag)=>{
+  chosenTagName.value = tag.name
+  emit('update:modelValue',tag.sign)
 }
 </script>
 <style scoped lang="scss">

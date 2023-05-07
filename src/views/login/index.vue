@@ -38,7 +38,7 @@
             </template>
           </van-field>
           <div class="submitBtnRow">
-            <van-button block native-type="submit" color="#5c33be"> 提交 </van-button>
+            <van-button block native-type="submit" color="#5c33be"> 登录 </van-button>
           </div>
         </van-form>
       </section>
