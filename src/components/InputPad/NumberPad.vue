@@ -16,7 +16,7 @@
           </van-popup>
         </span>
       </span>
-      <span class="amountBox">{{ refAmount }}</span>
+      <span class="amountBox">{{ padForm.amount }}</span>
     </div>
     <div class="numPad">
       <span class="btn" v-for="btn in buttons" :key="btn.text" @click="btn.onClick">
@@ -51,28 +51,28 @@ const handleDateConfirm = () => {
   padForm.date = refDate.value.join('-')
 }
 
-const refAmount = ref<string>('0')
 const handleBtnNum = (value: string) => {
-  const aLen = refAmount.value.length
+  const aLen = padForm.amount.length
   if (aLen >= 10) return
-  const dotIndex = refAmount.value.indexOf('.')
+  const dotIndex = padForm.amount.indexOf('.')
   if (dotIndex >= 0 && aLen - dotIndex > 2) return
   if (value === '.' && dotIndex >= 0) return
-  if (value === '0' && refAmount.value === '0') return
-  if (value !== '0' && value !== '.' && refAmount.value === '0') refAmount.value = ''
-  refAmount.value += value
+  if (value === '0' && padForm.amount === '0') return
+  if (value !== '0' && value !== '.' && padForm.amount === '0') padForm.amount = ''
+  padForm.amount += value
 }
 const handleBtnDel = () => {
-  const aLen = refAmount.value.length
+  const aLen = padForm.amount.length
   if (aLen === 1) {
-    refAmount.value = '0'
+    padForm.amount = '0'
   } else {
-    refAmount.value = refAmount.value.slice(0, aLen - 1)
+    padForm.amount = padForm.amount.slice(0, aLen - 1)
   }
 }
+const emit =defineEmits(['submit'])
 const handleSubmit = () => {
   console.log('submit')
-  const amount = refAmount.value.split('').filter((item: string) => item !== '.')
+  const amount = padForm.amount.split('').filter((item: string) => item !== '.')
   const isZero = amount.every((item: string) => item === '0')
   if (isZero) {
     showDialog({
@@ -83,6 +83,10 @@ const handleSubmit = () => {
     })
     return
   }
+  emit('submit',{
+    happen_at: padForm.date,
+    amount: +padForm.amount
+  })
 }
 const buttons: PadBtn[]= [
   {text: '1', onClick:()=>{handleBtnNum('1')}, type: 'default'},
@@ -98,7 +102,7 @@ const buttons: PadBtn[]= [
   {text: '.', onClick:()=>{handleBtnNum('.')}, type: 'default'},
   {text: '删除', onClick:()=>{handleBtnDel()}, type: 'default'},
   {text: '提交', onClick:()=>{handleSubmit()}, type: 'primary'},
-  {text: 'AC', onClick:()=>{refAmount.value='0'}, type: 'default'},
+  {text: 'AC', onClick:()=>{padForm.amount='0'}, type: 'default'},
 ]
 </script>
 <style scoped lang="scss">

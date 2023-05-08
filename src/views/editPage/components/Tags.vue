@@ -6,7 +6,7 @@
         <span class="emojiName">新增</span>
       </li>
       <li v-for="tag in tags" :key="tag.id" @touchstart="startTouchTag($event, tag)" @touchend="endTouchTag" @click="onSelectTag(tag)">
-        <span class="emojiWrap">{{ tag.sign }}</span>
+        <span class="emojiWrap" :class="{'active': chosenTag && chosenTag.id === tag.id}">{{ tag.sign }}</span>
         <span class="emojiName">{{ tag.name.slice(0, 4) }}</span>
       </li>
       <p class="bottomFuncRow">
@@ -80,11 +80,11 @@ const handleTouchmove = (e: TouchEvent) => {
     clearTimeout(timer.value)
   }
 }
-const chosenTagName = ref('')
+const chosenTag = ref<Tag>()
 const emit= defineEmits(['update:modelValue'])
 const onSelectTag =(tag:Tag)=>{
-  chosenTagName.value = tag.name
-  emit('update:modelValue',tag.sign)
+  chosenTag.value = tag
+  emit('update:modelValue',tag.id)
 }
 </script>
 <style scoped lang="scss">
@@ -111,6 +111,9 @@ const onSelectTag =(tag:Tag)=>{
         align-items: center;
         justify-content: center;
         font-size: 6vw;
+        &.active{
+          background-color: var(--tag-active-bg);
+        }
         &.addIcon svg {
           height: 1.2em;
           width: 1.2em;

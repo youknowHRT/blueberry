@@ -10,9 +10,9 @@
   --main-button-bg: var(--common-theme-bg);
   --dialog-header-color: #fff;
   --tag-bg: #EFEFEF;
+  --tag-active-bg: #dad0f1;
   --list-border-color: #ddd;
   --list-sub-text-color: #999;
-  --tag-bg: #EFEFEF;
 }
 
 :root:root{
@@ -20,4 +20,5 @@
   --van-button-primary-background: var(--main-button-bg);
   --van-button-primary-border-color: var(--main-button-bg);
   --van-overlay-z-index: 100;
+  --van-toast-default-width: 120px;
 }

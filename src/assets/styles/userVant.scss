@@ -13,3 +13,8 @@
     border: unset
   }
 }
+.van-popup.van-toast{
+  background: var(--van-toast-background);
+  width:var(--van-toast-default-width);
+  height: var(--van-toast-default-width);
+}
