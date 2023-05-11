@@ -90,7 +90,7 @@ const onSelectTag =(tag:Tag)=>{
 <style scoped lang="scss">
 .tagsWrap {
   height: 100%;
-  padding: 12px 0;
+  padding: 12px 0 4px;
   ul {
     display: flex;
     flex-wrap: wrap;
