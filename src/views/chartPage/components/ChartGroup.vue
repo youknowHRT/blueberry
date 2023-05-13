@@ -1,11 +1,12 @@
 <template>
-  <!-- <div class=''> -->
-  <van-dropdown-menu>
-    <van-dropdown-item v-model="kind" :options="options" />
-  </van-dropdown-menu>
-  <LineChart />
-  <PieChart />
-  <!-- </div> -->
+  <div class='chartGroupWrap'>
+    <van-dropdown-menu>
+      <van-dropdown-item v-model="kind" :options="options" />
+    </van-dropdown-menu>
+    <LineChart />
+    <PieChart />
+    <RowBarChart/>
+  </div>
 </template>
 <script lang="ts" setup name="ChartGroup">
 import { ref, reactive, PropType, onMounted, watch } from 'vue'
@@ -69,6 +70,10 @@ watch(()=>kind.value,()=>getChartData())
 watch(props.timePeriod,()=>getChartData())
 </script>
 <style scoped lang="scss">
+.chartGroupWrap{
+  height: 100%;
+  overflow-y: auto;
+}
 :deep(.van-dropdown-menu__bar) {
   box-shadow: unset;
 }

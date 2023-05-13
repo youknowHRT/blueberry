@@ -118,14 +118,7 @@ const getMoreData = () => {
             border-top: 1px solid var(--list-border-color);
           }
           .icon{
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6em;
-            background-color: var(--tag-bg);
+            @include tag;
           }
           .detail{
             flex: 1;

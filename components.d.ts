@@ -31,6 +31,7 @@ declare module '@vue/runtime-core' {
     PieChart: typeof import('./src/components/charts/PieChart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    RowBarChart: typeof import('./src/components/charts/RowBarChart.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanDatePicker: typeof import('vant/es')['DatePicker']
     VanDropdownItem: typeof import('vant/es')['DropdownItem']
