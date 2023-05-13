@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { closeToast, showLoadingToast } from 'vant'
-import {mockItemIndexBalance, mockItemIndex, mockTagIndex, mockTagShow} from '@/mock'
+import {mockItemIndexBalance, mockItemIndex, mockTagIndex, mockTagShow, mockItemSummary} from '@/mock'
 
 type GetConfig = Omit<AxiosRequestConfig, 'url' | 'params' | 'methods'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'methods'>
@@ -84,6 +84,9 @@ const mock = (response: AxiosResponse) => {
       return true
     case 'tagShow':
       [response.status, response.data]=mockTagShow(response.config)
+      return true
+    case 'itemSummary':
+      [response.status, response.data]=mockItemSummary(response.config)
       return true
   }
   return false

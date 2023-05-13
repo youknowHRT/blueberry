@@ -95,9 +95,10 @@ const onSelectTag =(tag:Tag)=>{
     display: flex;
     flex-wrap: wrap;
     height: 100%;
+    width: 100%;
     overflow-y: scroll;
     li {
-      width: 20vw;
+      width: 20%;
       height: 20vw * 1.14;
       display: flex;
       flex-direction: column;
