@@ -23,7 +23,7 @@ import { ref, reactive} from 'vue'
 <style scoped lang='scss'>
 .rowBarChartWrap{
   padding: 0 16px;
-  margin-top: 16px;
+  // margin-top: 16px; 
   ul{
     li{
       margin-bottom: 16px;
@@ -42,14 +42,15 @@ import { ref, reactive} from 'vue'
         }
         .barWrap{
           height: 8px;
-          border-radius: 4px;
-          background: var(--bar-bg);
+          // border-radius: 4px;
+          // background: var(--bar-bg);
           position: relative;
           overflow: hidden;
           margin-top: 4px;
           .barInner{
             height: 100%;
             background-color: #53a867;
+            border-radius: 4px;
           }
         }
       }

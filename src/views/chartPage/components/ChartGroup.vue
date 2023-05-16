@@ -3,14 +3,15 @@
     <van-dropdown-menu>
       <van-dropdown-item v-model="kind" :options="options" />
     </van-dropdown-menu>
-    <LineChart />
+    <LineChart :data="finalChartData1"/>
     <PieChart />
     <RowBarChart/>
   </div>
 </template>
 <script lang="ts" setup name="ChartGroup">
-import { ref, reactive, PropType, onMounted, watch } from 'vue'
+import { ref, reactive, PropType, onMounted, watch, computed } from 'vue'
 import { http } from '@/shared/Http'
+import dayjs from 'dayjs'
 
 const kind = ref('expenses')
 const options = [
@@ -68,6 +69,20 @@ onMounted(() => {
 })
 watch(()=>kind.value,()=>getChartData())
 watch(props.timePeriod,()=>getChartData())
+
+const finalChartData1 = computed(()=>{
+  if(!props.timePeriod.happened_after || !props.timePeriod.happened_before){
+    return []
+  }
+  const start = dayjs(props.timePeriod.happened_after)
+  const end = dayjs(props.timePeriod.happened_before)
+  const diff = end.diff(start,'day') + 1
+  return Array.from({length: diff},(v,i)=>{
+    const date = start.add(i,'day').format('YYYY-MM-DD')
+    const item = lineChartList.value.find(item=>item.happen_at === date)
+    return [date, item?.amount || 0]
+  })
+}) 
 </script>
 <style scoped lang="scss">
 .chartGroupWrap{

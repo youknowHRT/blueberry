@@ -12,12 +12,12 @@ const initChart = () => {
     tooltip: {
       trigger: 'item'
     },
-    legend: {
-      // top: '5%',
-      // left: 'center'
-      top: 'bottom'
-    },
-    grid: [{ left: 16, top: 0, right: 16, bottom: 0 }],
+    // legend: {
+    //   // top: '5%',
+    //   // left: 'center'
+    //   top: 'bottom'
+    // },
+    grid: [{ left: 16, top: 0, right: 16, bottom: 16 }],
     series: [
       {
         name: 'Access From',
@@ -29,20 +29,20 @@ const initChart = () => {
           borderColor: '#fff',
           borderWidth: 2
         },
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: 20,
-            fontWeight: 'bold'
-          }
-        },
-        labelLine: {
-          show: false
-        },
+        // label: {
+        //   show: false,
+        //   position: 'center'
+        // },
+        // emphasis: {
+        //   label: {
+        //     show: true,
+        //     fontSize: 20,
+        //     fontWeight: 'bold'
+        //   }
+        // },
+        // labelLine: {
+        //   show: false
+        // },
         data: [
           { value: 1048, name: 'Search Engine' },
           { value: 735, name: 'Direct' },
@@ -63,6 +63,6 @@ onMounted(() => {
 </script>
 <style scoped lang="scss">
 .pieContainer {
-  height: 100vw;
+  height: 80vw;
 }
 </style>
