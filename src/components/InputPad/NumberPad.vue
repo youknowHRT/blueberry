@@ -33,7 +33,7 @@ import dayjs from 'dayjs'
 import { showDialog } from 'vant'
 
 const padForm = reactive({
-  amount: '',
+  amount: '0',
   date: ''
 })
 const refDate = ref<string[]>([])
@@ -42,7 +42,6 @@ onMounted(() => {
   refDate.value = padForm.date.split('-')
 })
 const handleDateChange = (value: Record<string, any>) => {
-  console.log(value, '🍎')
   padForm.date = value.selectedValues.join('-')
 }
 const showCalendar = ref<boolean>(false)
@@ -114,7 +113,6 @@ const buttons: PadBtn[]= [
     align-items: center;
     padding: 8px 16px;
     background-color: var(--numPad-msgRow-bg);
-    // border: 1px solid red;
     .dateBox {
       display: inline-flex;
       align-items: center;
