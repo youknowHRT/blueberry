@@ -3,63 +3,56 @@
 </template>
 <script lang="ts" setup name="PieChart">
 import * as echarts from 'echarts'
-import { ref, reactive, onMounted, nextTick } from 'vue'
-const pieChart = ref<HTMLElement>()
-const initChart = () => {
-  if (!pieChart.value) return
-  var myChart = echarts.init(pieChart.value)
-  myChart.setOption({
-    tooltip: {
-      trigger: 'item'
-    },
-    // legend: {
-    //   // top: '5%',
-    //   // left: 'center'
-    //   top: 'bottom'
-    // },
-    grid: [{ left: 16, top: 0, right: 16, bottom: 16 }],
-    series: [
-      {
-        name: 'Access From',
-        type: 'pie',
-        radius: ['40%', '70%'],
-        avoidLabelOverlap: false,
-        itemStyle: {
-          borderRadius: 10,
-          borderColor: '#fff',
-          borderWidth: 2
-        },
-        // label: {
-        //   show: false,
-        //   position: 'center'
-        // },
-        // emphasis: {
-        //   label: {
-        //     show: true,
-        //     fontSize: 20,
-        //     fontWeight: 'bold'
-        //   }
-        // },
-        // labelLine: {
-        //   show: false
-        // },
-        data: [
-          { value: 1048, name: 'Search Engine' },
-          { value: 735, name: 'Direct' },
-          { value: 580, name: 'Email' },
-          { value: 484, name: 'Union Ads' },
-          { value: 300, name: 'Video Ads' }
-        ]
-      }
-    ]
-  })
+import { ref, PropType, onMounted, nextTick, watch} from 'vue'
+import { getMoney } from '@/utils/money'
+const pieChart = ref<HTMLDivElement>()
+const option = {
+  tooltip: {
+    trigger: 'item',
+    formatter: (x:{name: string,value: number,percent: number})=>{
+      const {name,value,percent} = x
+      return `${name}: ￥${getMoney(value)} 占比 ${percent}%`
+    }
+  },
+  grid: [{ left: 16, top: 0, right: 16, bottom: 16 }],
+  series: [
+    {
+      name: '类目占比',
+      type: 'pie',
+      radius: ['40%', '70%'],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 10,
+        borderColor: '#fff',
+        borderWidth: 2
+      },
+    }
+  ]
 }
+let myChart: echarts.ECharts | undefined = undefined
 onMounted(() => {
   if (!pieChart.value) return
   nextTick(() => {
-    initChart()
+    myChart = echarts.init(pieChart.value as HTMLDivElement)
+    myChart!.setOption(option)
   })
 })
+const props = defineProps({
+  data: {
+    type: Array as PropType<{ name: string; value: number }[]>,
+    default: () => []
+  }
+})
+watch(
+  () => props.data,
+  () => {
+    myChart!.setOption({
+      series: [{
+        data: props.data
+      }]
+    })
+  }
+)
 </script>
 <style scoped lang="scss">
 .pieContainer {

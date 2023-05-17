@@ -28,6 +28,7 @@ const option = {
     },
     xAxis: {
       type: 'time',
+      boundaryGap: ['3%', '0%'],
       axisLabel:{
         formatter:(value: string)=>{
           return dayjs(value).format('MM-DD')
