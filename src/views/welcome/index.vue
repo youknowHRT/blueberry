@@ -27,7 +27,7 @@
     <footer :class="{ finish: refMode === 4 }">
       <span v-show="refMode !== 4" class="fake">fake</span>
       <span @click="handNext">{{ refMode === 4 ? '完成' : '下一页' }}</span>
-      <span v-show="refMode !== 4">跳过</span>
+      <span v-show="refMode !== 4" @click="handleSkipAd">跳过</span>
     </footer>
   </div>
 </template>
@@ -36,6 +36,7 @@
 import { ref, watchEffect } from 'vue'
 import { useSwipe } from '../../hooks/useSwipe'
 import { throttle } from '../../utils/throttle'
+import { useRouter } from 'vue-router'
 const refMode = ref<number>(1)
 const handNext = throttle(() => {
   if (refMode.value === 4) {
@@ -51,6 +52,11 @@ watchEffect(() => {
     handNext([])
   }
 })
+const router = useRouter()
+const handleSkipAd = () => {
+  localStorage.setItem('skipAd', 'yes')
+  router.push('/home')
+}
 </script>
 <style scoped lang="scss">
 .welcomePage {

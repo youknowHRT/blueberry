@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[]= [
   {
     path: '/',
-    redirect: '/home',
+    redirect: '/welcome',
   },
   {
     path: '/home',
@@ -38,6 +38,9 @@ const routes: RouteRecordRaw[]= [
   },
   {
     path: '/welcome',
+    beforeEnter: (to, from, next) => {
+      localStorage.getItem('skipAd') === 'yes' ? next('/home') : next()
+    },
     component: () => import('@/views/welcome/index.vue')
   },
   {

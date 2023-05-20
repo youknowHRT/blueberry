@@ -4,7 +4,7 @@ import {mockItemIndexBalance, mockItemIndex, mockTagIndex, mockTagShow, mockItem
 
 type GetConfig = Omit<AxiosRequestConfig, 'url' | 'params' | 'methods'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'methods'>
-
+import {router} from '@/route/index'
 export class Http {
   instance: AxiosInstance
   constructor(baseURL: string) {
@@ -62,6 +62,10 @@ http.instance.interceptors.response.use(
     if (error.config._autoLoading === true) {
       closeToast()
     }
+    if (error.response?.status === 401) {
+      const route = router.options.history.location
+      router.push(`/login?return_to=${route}`)
+    }
     if (error.response?.status === 429) {
       alert('你太频繁了')
     }
@@ -72,7 +76,7 @@ http.instance.interceptors.response.use(
 const mock = (response: AxiosResponse) => {
   if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1' && location.hostname !== '192.168.3.57')
     return
-  switch (response.config?._mock) {
+  switch (response?.config?._mock) {
     case 'itemIndexBalance':
       [response.status, response.data]=mockItemIndexBalance(response.config)
       return true

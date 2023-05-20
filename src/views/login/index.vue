@@ -50,7 +50,7 @@ import { ref, reactive } from 'vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 import { http } from '@/shared/Http'
 import { FormInstance } from 'vant'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import {useBool} from '@/hooks/useBool'
 import { useMeStore } from '@/store/useMeStore'
 const formData = reactive({
@@ -59,6 +59,7 @@ const formData = reactive({
 })
 const refForm = ref<FormInstance>()
 const router = useRouter()
+const route = useRoute()
 const meStore = useMeStore()
 const {ref: validCodeBtnState,on: validCodeBtnDisabled, off: validCodeBtnUse} = useBool(false)
 const onSubmit = () => {
@@ -67,7 +68,8 @@ const onSubmit = () => {
     .then((res) => {
       localStorage.setItem('jwt', res.data.jwt)
       meStore.refreshMe()
-      router.push('/')
+      const returnTo = route.query.return_to?.toString()
+      router.push(returnTo || '/')
     })
     .catch((err) => {
       throw err
